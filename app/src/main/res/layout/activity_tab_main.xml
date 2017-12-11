@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fragment_these_month_profit_fl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <RadioGroup
+        android:id="@+id/activity_lottery_rg"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@drawable/shape_white_background_8"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/activity_lottery_rgb_nationwide"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@drawable/select_radiobutton_background"
+            android:textSize="15dp"
+            tools:ignore="SpUsage" />
+
+
+        <RadioButton
+            android:id="@+id/activity_lottery_rgb_place"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="会员专享"
+            android:textColor="@drawable/select_radiobutton_background"
+            android:textSize="15dp"
+            tools:ignore="SpUsage" />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="分类"
+            android:textColor="@drawable/select_radiobutton_background"
+            android:textSize="15dp"
+            tools:ignore="SpUsage" />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="艺人"
+            android:textColor="@drawable/select_radiobutton_background"
+            android:textSize="15dp"
+            tools:ignore="SpUsage" />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/select_radiobutton_background"
+            android:textSize="15dp"
+            tools:ignore="SpUsage" />
+    </RadioGroup>
+
+
+
+
+</LinearLayout>

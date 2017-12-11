@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!--播放器相关颜色-->
+    <color name="colorPlayerBlackTrans">#bb000000</color>
+    <color name="colorPlayerWhite">#FFFFFF</color>
+    <!--进度条的颜色-->
+    <color name="colorPlayerProgressBg">#e1767676</color>
+    <color name="colorPlayerProgressSecond">#c1c1c1</color>
+    <color name="colorPlayerProgress">#FFFFFF</color>
+    <!-- 透明 -->
+    <color name="colorPlayerTrans">#00000000</color>
+    <color name="text_common_dark_grey">#707070</color>
+    <color name="bg_grey_dark">#f5f5f5</color>
+    <color name="grayTextColor">#777777</color>
+    <!--黑色字体-->
+    <color name="blackTextColor">#323232</color>
+    <!--白色字体-->
+    <color name="hintTextColor">#CCCCCC</color>
+    <!--提示字体-->
+    <color name="whiteTextColor">#FAFAFA</color>
+    <!--默认间隔线-->
+    <color name="colorDividers">#E8E8E8</color>
+    <!--背景色-->
+    <color name="backgroundColor">#F5F5F5</color>
+</resources>
