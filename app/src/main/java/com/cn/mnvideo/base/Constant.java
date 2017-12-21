@@ -8,5 +8,10 @@ package com.cn.mnvideo.base;
  */
 public class Constant {
 
-    public  static  final String RESPONSE_SUCCESS="0000";
+    public static final String RESPONSE_SUCCESS = "0000";
+
+    public static final String IP = "http://222.186.173.169:8080";
+
+    public static final String VIDEO_RUL = "/videoPic/api/getVideoPics";
+
 }

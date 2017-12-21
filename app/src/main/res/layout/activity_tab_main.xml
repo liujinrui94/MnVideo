@@ -5,76 +5,75 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/top"
+        layout="@layout/top_title_layout"></include>
+
     <FrameLayout
         android:id="@+id/fragment_these_month_profit_fl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
     <RadioGroup
         android:id="@+id/activity_lottery_rg"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:background="@drawable/shape_white_background_8"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <RadioButton
             android:id="@+id/activity_lottery_rgb_nationwide"
+            style="@style/tab_home_font_bg"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:button="@null"
             android:checked="true"
+            android:drawableTop="@drawable/tab_selected_home_rb"
             android:gravity="center"
             android:text="首页"
-            android:textColor="@drawable/select_radiobutton_background"
-            android:textSize="15dp"
             tools:ignore="SpUsage" />
 
 
         <RadioButton
             android:id="@+id/activity_lottery_rgb_place"
+            style="@style/tab_home_font_bg"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:button="@null"
-            android:gravity="center"
+            android:drawableTop="@drawable/tab_selected_member_rb"
             android:text="会员专享"
-            android:textColor="@drawable/select_radiobutton_background"
-            android:textSize="15dp"
             tools:ignore="SpUsage" />
+
         <RadioButton
+            style="@style/tab_home_font_bg"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:button="@null"
-            android:gravity="center"
+            android:drawableTop="@drawable/tab_selected_fenlei_rb"
             android:text="分类"
-            android:textColor="@drawable/select_radiobutton_background"
-            android:textSize="15dp"
             tools:ignore="SpUsage" />
+
         <RadioButton
+            style="@style/tab_home_font_bg"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/tab_selected_yiren_rb"
             android:gravity="center"
             android:text="艺人"
-            android:textColor="@drawable/select_radiobutton_background"
-            android:textSize="15dp"
             tools:ignore="SpUsage" />
+
         <RadioButton
+            style="@style/tab_home_font_bg"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:button="@null"
-            android:gravity="center"
+            android:drawableTop="@drawable/tab_selected_mine_rb"
             android:text="我的"
-            android:textColor="@drawable/select_radiobutton_background"
-            android:textSize="15dp"
             tools:ignore="SpUsage" />
     </RadioGroup>
-
-
 
 
 </LinearLayout>

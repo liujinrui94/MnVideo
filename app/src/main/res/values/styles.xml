@@ -9,6 +9,7 @@
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
         <item name="android:windowSoftInputMode">adjustUnspecified|stateHidden</item>
         <item name="android:configChanges">orientation|keyboardHidden|screenSize</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
     </style>
     <!--Activity Animation-->
     <style name="ActivityAnimation" parent="@android:style/Animation.Activity">
@@ -58,19 +59,21 @@
         <!-- 字体加粗 -->
         <item name="android:textStyle">normal</item>
         <!-- 字体大小 -->
-        <item name="android:textSize">14.0sp</item>
+        <item name="android:textSize">13.0sp</item>
         <!-- 文字过长的省略显示 -->
         <item name="android:ellipsize">marquee</item>
         <!-- 当文本不能正常现实的时候后面用..表示 -->
         <item name="android:singleLine">true</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginTop">3dp</item>
     </style>
 
     <!--progress dialog theme-->
     <style name="BaseProgressDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">@color/whiteTextColor</item>
     </style>
 
     <style name="text_black_15dp">

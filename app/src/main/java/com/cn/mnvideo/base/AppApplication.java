@@ -2,8 +2,13 @@ package com.cn.mnvideo.base;
 
 import android.app.Application;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.cn.mnvideo.utils.AppLogger;
 
 import java.util.Stack;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class AppApplication extends Application {
 
@@ -19,6 +24,9 @@ public class AppApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        JPushInterface.init(this);
+        AppLogger.d(JPushInterface.getRegistrationID(this));
+
     }
 
 

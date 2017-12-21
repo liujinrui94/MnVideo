@@ -1,6 +1,8 @@
 package com.cn.mnvideo.network;
 
 
+import com.cn.mnvideo.utils.AppLogger;
+
 /**
  * @author: LiuJinrui
  * @email: liujinrui@qdcftx.com
@@ -10,30 +12,33 @@ package com.cn.mnvideo.network;
 public class BaseNetRetRequestPresenter {
 
 
-        private BaseModeImp.PostBaseModeImp baseModeImp;
-        private NetRequestView netRequestView;
+    private BaseModeImp.PostBaseModeImp baseModeImp;
+    private NetRequestView netRequestView;
 
-        public BaseNetRetRequestPresenter(NetRequestView netRequestView) {
-            this.netRequestView = netRequestView;
-            baseModeImp = new BaseModeImp.PostBaseModeImp();
-        }
-        public void PostNetRetRequest() {
-                baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
-                    @Override
-                    public void SucceedCallBack(String data) {
-                        netRequestView.NetInfoResponse(data);
-                    }
+    public BaseNetRetRequestPresenter(NetRequestView netRequestView) {
+        this.netRequestView = netRequestView;
+        baseModeImp = new BaseModeImp.PostBaseModeImp();
+    }
 
-                    @Override
-                    public void OnNetError() {
-                        netRequestView.showCordError("网络连接异常,请检查网络!");
-                    }
-                    @Override
-                    public void CodeError(String msg) {
-                        netRequestView.showCordError(msg);
-                    }
-                });
-        }
+    public void PostNetRetRequest() {
+        baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
+            @Override
+            public void SucceedCallBack(String data) {
+                netRequestView.NetInfoResponse(data, netRequestView.sign());
+            }
+
+            @Override
+            public void OnNetError() {
+                AppLogger.e("访问异常"+netRequestView.getPostJsonString());
+                netRequestView.showCordError("网络连接异常,请检查网络!",0);
+            }
+
+            @Override
+            public void CodeError(String msg) {
+                netRequestView.showCordError(msg,netRequestView.sign());
+            }
+        });
+    }
 
 
 }

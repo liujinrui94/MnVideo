@@ -8,17 +8,16 @@ package com.cn.mnvideo.bean;
  */
 public class BaseResponseParams {
 
-    private  String respondeCode;
+    private String responseCode;
     private String responseMsg;
-    private String info;
 
 
-    public String getRespondeCode() {
-        return respondeCode;
+    public String getResponseCode() {
+        return responseCode;
     }
 
-    public void setRespondeCode(String respondeCode) {
-        this.respondeCode = respondeCode;
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
     }
 
     public String getResponseMsg() {
@@ -29,11 +28,4 @@ public class BaseResponseParams {
         this.responseMsg = responseMsg;
     }
 
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
 }

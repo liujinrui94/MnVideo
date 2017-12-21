@@ -31,11 +31,6 @@ public class HomeFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    @Override
-    public void setRootView(int resource) {
-        super.setRootView(R.layout.fragment_home);
-        initView();
-    }
 
     private void initView() {
 

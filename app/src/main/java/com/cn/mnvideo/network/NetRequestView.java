@@ -10,10 +10,11 @@ public interface NetRequestView {
     /**
      * @param msg 错误码信息
      */
-    void showCordError(String msg);
+    void showCordError(String msg,int sign);
 
     String getPostJsonString();
 
-    void NetInfoResponse(String data);
+    void NetInfoResponse(String data,int sign);
+    int sign();
 
 }

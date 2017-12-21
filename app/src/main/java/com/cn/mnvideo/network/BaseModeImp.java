@@ -1,11 +1,17 @@
 package com.cn.mnvideo.network;
 
+import android.util.Log;
+
 import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.BaseResponseParams;
 import com.cn.mnvideo.mode.BaseNetRequestModel;
+import com.cn.mnvideo.utils.AppLogger;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import okhttp3.Call;
 
@@ -24,14 +30,20 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
                 @Override
                 public void onResponse(String response, int id) {
-                    BaseResponseParams info = new Gson().fromJson(response,
-                            BaseResponseParams.class);
-                    if (info.getRespondeCode().equals(Constant.RESPONSE_SUCCESS)) {
-                        callBack.SucceedCallBack(info.getInfo());
-                    } else {
-                        callBack.CodeError(info.getResponseMsg());
+                    AppLogger.d(response);
+                    JSONObject jsonObject = null;
+                    JSONObject data=null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                        data = jsonObject.optJSONObject("info");
+                        if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
+                            callBack.SucceedCallBack(data.toString());
+                        } else {
+                            callBack.CodeError(jsonObject.getString("responseMsg"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
                 }
             });
 
