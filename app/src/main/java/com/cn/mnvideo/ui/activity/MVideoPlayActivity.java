@@ -42,15 +42,17 @@ public class MVideoPlayActivity extends BaseActivity {
     private final String url4 = "/storage/emulated/0/DCIM/Camera/VID_20170605_143722.mp4";
 
     private MNViderPlayer mnViderPlayer;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        url =getIntent().getStringExtra("videoUrl");
+
         initViews();
         initPlayer();
-        //请求权限:调节亮度
-//        requestPermission();
 
     }
 
@@ -100,6 +102,7 @@ public class MVideoPlayActivity extends BaseActivity {
 
     private void initViews() {
         mnViderPlayer = (MNViderPlayer) findViewById(R.id.mn_videoplayer);
+        mnViderPlayer.playVideo(url, "标题");
     }
 
     private void initPlayer() {

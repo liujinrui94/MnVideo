@@ -4,13 +4,14 @@ import android.app.Application;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.cn.mnvideo.network.NetRequestView;
 import com.cn.mnvideo.utils.AppLogger;
 
 import java.util.Stack;
 
 import cn.jpush.android.api.JPushInterface;
 
-public class AppApplication extends Application {
+public class AppApplication extends Application implements NetRequestView {
 
     public static AppApplication instance;
 
@@ -61,10 +62,6 @@ public class AppApplication extends Application {
             if (allActivity.size() == i) {
                 break;
             }
-//            if (null != allActivitys.get(i) && !(allActivitys.get(i) instanceof LoginActivity)) {
-//                allActivitys.get(i).finish();
-//            }
-
             if (null != allActivity.get(i)) {
                 allActivity.get(i).finish();
             }
@@ -82,4 +79,23 @@ public class AppApplication extends Application {
         }
     }
 
+    @Override
+    public void showCordError(String msg, int sign) {
+
+    }
+
+    @Override
+    public String getPostJsonString() {
+        return null;
+    }
+
+    @Override
+    public void NetInfoResponse(String data, int sign) {
+
+    }
+
+    @Override
+    public int sign() {
+        return 0;
+    }
 }

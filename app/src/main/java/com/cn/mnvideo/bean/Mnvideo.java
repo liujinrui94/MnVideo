@@ -30,7 +30,15 @@ public class Mnvideo {
     private String imgFirst;
     private String fileUrl;
     private String title;
+    private String waibuUrl;
 
+    public String getWaibuUrl() {
+        return waibuUrl;
+    }
+
+    public void setWaibuUrl(String waibuUrl) {
+        this.waibuUrl = waibuUrl;
+    }
 
     public String getContent() {
         return content;

@@ -12,6 +12,7 @@ import com.cn.mnvideo.adapter.TabFragmentAdapter;
 import com.cn.mnvideo.base.BaseActivity;
 import com.cn.mnvideo.mode.UpgradeInterface;
 import com.cn.mnvideo.ui.fragmeng.ExperienceFragment;
+import com.cn.mnvideo.ui.fragmeng.FirstMemberFragment;
 import com.cn.mnvideo.ui.fragmeng.HomeFragment;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_main);
         list.add(new ExperienceFragment());
-        list.add(new HomeFragment());
+        list.add(new FirstMemberFragment());
         list.add(new HomeFragment());
         list.add(new HomeFragment());
         list.add(new HomeFragment());

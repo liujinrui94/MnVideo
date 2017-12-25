@@ -1,11 +1,9 @@
 package com.cn.mnvideo.utils;
 
-import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.cn.mnvideo.R;
 
 import java.io.File;
