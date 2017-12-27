@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.cn.mnvideo.bean.UserInfo;
 import com.cn.mnvideo.network.NetRequestView;
 import com.cn.mnvideo.utils.AppLogger;
 
@@ -17,8 +18,10 @@ public class AppApplication extends Application implements NetRequestView {
 
     public Stack<AppCompatActivity> allActivity = new Stack<>();
 
+    private UserInfo BaseUserInfo=new UserInfo();
 
     public AppApplication() {
+
     }
 
     @Override
@@ -29,7 +32,6 @@ public class AppApplication extends Application implements NetRequestView {
         AppLogger.d(JPushInterface.getRegistrationID(this));
 
     }
-
 
     public static AppApplication getInstance() {
         return instance;
@@ -67,6 +69,14 @@ public class AppApplication extends Application implements NetRequestView {
             }
         }
         allActivity.clear();
+    }
+
+    public UserInfo getBaseUserInfo() {
+        return BaseUserInfo;
+    }
+
+    public void setBaseUserInfo(UserInfo baseUserInfo) {
+        BaseUserInfo = baseUserInfo;
     }
 
     public void AppExit() {

@@ -1,9 +1,11 @@
 package com.cn.mnvideo.utils;
 
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.cn.mnvideo.R;
 
 import java.io.File;
@@ -49,7 +51,61 @@ public class GlideUtils {
     }
 
 
+    /**
+     * 加载圆形网络图片(默认图片)
+     *
+     * @param url       地址
+     * @param imageView 加载控件
+     */
+    public void loadNetCircleDefaultImage(String url, ImageView imageView) {
+        loadNetCircleImage(url, imageView, R.mipmap.ic_load_default);
+    }
 
+    /**
+     * 加载圆形网络图片（可定义图片）
+     *
+     * @param url        地址
+     * @param imageView  加载控件
+     * @param defaultImg 错误加载图片
+     */
+    private void loadNetCircleImage(String url, ImageView imageView, int defaultImg) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .placeholder(defaultImg)
+                .error(defaultImg)
+                .transform(new GlideCircleTransform(imageView.getContext()))
+                .crossFade()
+                .into(imageView);
+    }
+
+    /**
+     * 加载圆角网络图片(默认图片)
+     *
+     * @param url       地址
+     * @param imageView 加载控件
+     */
+    public void loadNetRoundDefaultImage(String url, ImageView imageView) {
+        loadNetRoundImage(url, imageView, R.mipmap.ic_load_default, 15);
+    }
+
+    /**
+     * 加载圆角网络图片(可定义角度和背景图片)
+     *
+     * @param url        地址
+     * @param imageView  加载控件
+     * @param defaultImg 默认图片
+     * @param radius     角度
+     */
+    private void loadNetRoundImage(String url, ImageView imageView, int defaultImg, int radius) {
+        Context context = imageView.getContext();
+        Glide.with(context)
+                .load(url)
+                .transform(new CenterCrop(context), new GlideRoundTransform(context, radius))
+                .placeholder(defaultImg)
+                .error(defaultImg)
+                .crossFade()
+                .into(imageView);
+    }
 
 
     //加载本地图片
@@ -74,6 +130,41 @@ public class GlideUtils {
                 .into(imageView);
     }
 
+    //加载本地圆形图片
+    public void loadLocalCircleImage(int resId, ImageView imageView) {
+        Glide.with(imageView.getContext())
+                .load(resId)
+                .placeholder(R.mipmap.ic_load_default)
+                .error(R.mipmap.ic_load_default)
+                .crossFade()
+                .transform(new GlideCircleTransform(imageView.getContext()))
+                .centerCrop()
+                .into(imageView);
+    }
 
+    //加载本地圆角图片
+    public void loadLocalRoundImage(int resId, ImageView imageView, int radius) {
+        Glide.with(imageView.getContext())
+                .load(resId)
+                .placeholder(R.mipmap.ic_load_default)
+                .error(R.mipmap.ic_load_default)
+                .crossFade()
+                .transform(new CenterCrop(imageView.getContext()), new GlideRoundTransform(imageView.getContext(), radius))
+                .centerCrop()
+                .into(imageView);
+    }
+
+    //加载本地圆形file图片
+    public void loadLocalCircleImage(File file, ImageView imageView) {
+        Glide.with(imageView.getContext())
+                .load(file)
+                .placeholder(R.mipmap.ic_load_default)
+                .diskCacheStrategy( DiskCacheStrategy.NONE )//禁用磁盘缓存
+                .error(R.mipmap.ic_load_default)
+                .crossFade()
+                .transform(new GlideCircleTransform(imageView.getContext()))
+                .centerCrop()
+                .into(imageView);
+    }
 
 }

@@ -21,8 +21,6 @@ import com.cn.mnvideo.bean.Mnvideo;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
 import com.cn.mnvideo.utils.GlideUtils;
 import com.cn.mnvideo.utils.GsonUtil;
-import com.jude.rollviewpager.RollPagerView;
-import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -30,21 +28,17 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * @author: LiuJinrui
  * @email: liujinrui@qdcftx.com
- * @time: 2017/12/15 21:55
- * @description: 普通会员首页
+ * @time: 2017/12/27 20:18
+ * @description:
  */
-public class ExperienceFragment extends BaseFragment {
+public class ArtistFragment extends BaseFragment {
 
 
     private RecyclerView recyclerView;
 
-    RollPagerView rollPagerView;
 
     private SmartRefreshLayout smartRefreshLayout;
 
@@ -52,7 +46,6 @@ public class ExperienceFragment extends BaseFragment {
     private BaseRecyclerAdapter mBaseRecyclerAdapter;
 
     private InfoBean mInfoBean;
-    private int [] imageUrls={R.mipmap.ic_huiyuangongnneg,R.mipmap.ic_huiyuangongnneg};//图片地址
 
     private int pageNum = 0;
 
@@ -60,40 +53,21 @@ public class ExperienceFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_experience, container, false);
+        rootView = inflater.inflate(R.layout.fragment_fist_member, container, false);
         initEvent();
         smartRefreshLayout.autoRefresh();
         return rootView;
     }
 
     private void initEvent() {
-        recyclerView = rootView.findViewById(R.id.fragment_experience_rlv);
-        rollPagerView=rootView.findViewById(R.id.fragment_experience_roll_pager_view);
-        rollPagerView.setAdapter(new LoopPagerAdapter(rollPagerView) {
-            @Override
-            public View getView(ViewGroup container, int position) {
-                ImageView view = new ImageView(container.getContext());
-                GlideUtils.getInstance().loadLocalImage(imageUrls[position],view);
-                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                return view;
-            }
-
-            @Override
-            public int getRealCount() {
-                return imageUrls.length;
-            }
-        });
-
-
-
-        smartRefreshLayout = rootView.findViewById(R.id.fragment_experience_smartRefreshLayout);
+        recyclerView = rootView.findViewById(R.id.fragment_rlv);
+        smartRefreshLayout = rootView.findViewById(R.id.fragment_smartRefreshLayout);
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageNum = 0;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=1&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "?type=2&pageNum=" + pageNum, 0);
             }
         });
 
@@ -101,7 +75,7 @@ public class ExperienceFragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageNum++;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=1&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "?type=2&pageNum=" + pageNum, 0);
             }
         });
 
@@ -123,8 +97,8 @@ public class ExperienceFragment extends BaseFragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent mIntent = new Intent(getContext(), MVideoPlayActivity.class);
-                        mIntent.putExtra("videoUrl", model.getWaibuUrl());
+                        Intent mIntent=new Intent(getContext(), MVideoPlayActivity.class);
+                        mIntent.putExtra("videoUrl",model.getWaibuUrl());
                         startActivity(mIntent);
                     }
                 });
@@ -170,4 +144,5 @@ public class ExperienceFragment extends BaseFragment {
         }
 
     }
+
 }

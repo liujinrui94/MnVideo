@@ -7,4 +7,6 @@
     <string name="mnPlayerUrlEmptyHint">播放地址为空</string>
     <string name="mnPlayerPlayFailHint">视频播放失败</string>
     <string name="mnPlayerMobileNetHint">请注意,当前网络状态切换为3G/4G网络</string>
+
+    <string name="tuiguang">会员功能需要升级会员后展示\n商务合作邮箱：yatianga79@gmail.com</string>
 </resources>

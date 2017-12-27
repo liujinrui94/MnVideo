@@ -929,6 +929,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
      * @param url   视频地址
      * @param title 视频标题
      */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void playVideo(String url, String title) {
         playVideo(url, title, video_position);
     }
@@ -941,6 +942,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
      * @param title    视频标题
      * @param position 视频跳转的位置(毫秒)
      */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void playVideo(String url, String title, int position) {
         //地址判空处理
         if (TextUtils.isEmpty(url)) {
@@ -993,7 +995,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void resetMediaPlayer() {
         try {
-            if (mediaPlayer != null) {
+//            if (mediaPlayer != null) {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     mediaPlayer.stop();
@@ -1006,10 +1008,9 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
                 mediaPlayer.prepareAsync();
                 //视频缩放模式
                 mediaPlayer.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
-            } else {
-                //TODO:播放器初始化失败后怎么操作
-                Toast.makeText(context, "播放器初始化失败", Toast.LENGTH_SHORT).show();
-            }
+//            } else {
+//                startVideo();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -57,28 +57,6 @@ public class MVideoPlayActivity extends BaseActivity {
     }
 
 
-//    private void setVideoThumbnail() {
-//        if (PlayerUtils.isNetworkConnected(this)) {
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    final Bitmap videoThumbnail = PlayerUtils.createVideoThumbnail(url3, 200, 200);
-//                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (videoThumbnail != null) {
-//                                image.setVisibility(View.VISIBLE);
-//                                image.setImageBitmap(videoThumbnail);
-//                            } else {
-//                                image.setVisibility(View.GONE);
-//                            }
-//                        }
-//                    });
-//                }
-//            }).start();
-//        }
-//    }
-
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.System.canWrite(this)) {
@@ -167,7 +145,10 @@ public class MVideoPlayActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         //暂停
-        mnViderPlayer.pauseVideo();
+        if (mnViderPlayer!=null){
+            mnViderPlayer.pauseVideo();
+        }
+
     }
 
     @Override
@@ -175,6 +156,9 @@ public class MVideoPlayActivity extends BaseActivity {
         if (mnViderPlayer.isFullScreen()) {
             mnViderPlayer.setOrientationPortrait();
             return;
+        }else if (mnViderPlayer != null) {
+            mnViderPlayer.destroyVideo();
+            mnViderPlayer = null;
         }
         super.onBackPressed();
     }

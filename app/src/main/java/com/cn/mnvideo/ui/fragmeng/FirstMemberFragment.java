@@ -35,7 +35,7 @@ import butterknife.BindView;
  * @author: LiuJinrui
  * @email: liujinrui@qdcftx.com
  * @time: 2017/12/15 22:28
- * @description:
+ * @description: 普通会员
  */
 public class FirstMemberFragment extends BaseFragment {
     private RecyclerView recyclerView;

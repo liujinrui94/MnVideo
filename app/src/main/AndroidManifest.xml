@@ -24,17 +24,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.cn.mnvideo.ui.activity.MainActivity"></activity>
-        <activity
-            android:name=".ui.activity.MVideoPlayActivity"
-            android:configChanges="orientation|screenSize"
-
-            ></activity>
-        <activity android:name="com.cn.mnvideo.ui.activity.TabMainActivity">
+        <activity android:name="com.cn.mnvideo.ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".ui.activity.MVideoPlayActivity"
+            android:configChanges="orientation|screenSize"
+            ></activity>
+        <activity android:name="com.cn.mnvideo.ui.activity.TabMainActivity">
+
         </activity>
     </application>
 

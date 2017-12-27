@@ -48,6 +48,34 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
             });
 
         }
+
+        @Override
+        public void getBaseNetRequestModel(String requestString, final BaseNetRequestCallBack callBack) {
+            OkHttpUtils.get().url(requestString).build().execute(new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    callBack.OnNetError();
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    AppLogger.d(response);
+                    JSONObject jsonObject = null;
+                    JSONObject data=null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                        data = jsonObject.optJSONObject("info");
+                        if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
+                            callBack.SucceedCallBack(data.toString());
+                        } else {
+                            callBack.CodeError(jsonObject.getString("responseMsg"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
 }

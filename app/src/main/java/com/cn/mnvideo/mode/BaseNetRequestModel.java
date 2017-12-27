@@ -12,5 +12,7 @@ public interface BaseNetRequestModel {
 
     void postBaseNetRequestModel(String requestString, BaseNetRequestCallBack callBack);
 
+    void getBaseNetRequestModel(String requestString, BaseNetRequestCallBack callBack);
+
 
 }

@@ -39,6 +39,24 @@ public class BaseNetRetRequestPresenter {
             }
         });
     }
+    public void GetNetRetRequest() {
+        baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
+            @Override
+            public void SucceedCallBack(String data) {
+                netRequestView.NetInfoResponse(data, netRequestView.sign());
+            }
 
+            @Override
+            public void OnNetError() {
+                AppLogger.e("访问异常"+netRequestView.getPostJsonString());
+                netRequestView.showCordError("网络连接异常,请检查网络!",0);
+            }
+
+            @Override
+            public void CodeError(String msg) {
+                netRequestView.showCordError(msg,netRequestView.sign());
+            }
+        });
+    }
 
 }
