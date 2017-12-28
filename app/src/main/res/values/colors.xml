@@ -27,4 +27,6 @@
     <color name="colorDividers">#E8E8E8</color>
     <!--背景色-->
     <color name="backgroundColor">#EAEAEA</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

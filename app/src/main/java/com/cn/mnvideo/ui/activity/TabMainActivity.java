@@ -20,6 +20,7 @@ import com.cn.mnvideo.ui.fragmeng.FirstMemberFragment;
 import com.cn.mnvideo.ui.fragmeng.HomeFragment;
 import com.cn.mnvideo.ui.fragmeng.MineFragment;
 import com.cn.mnvideo.utils.ToastUtils;
+import com.cn.mnvideo.widget.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +44,34 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface {
 
     private List<Fragment> list = new ArrayList<>();
 
-    private Fragment[] fragments={new ExperienceFragment(),new FirstMemberFragment(),};
+    private int[] drawback = {R.drawable.tab_selected_home_rb,
+            R.drawable.tab_selected_member_rb,
+            R.drawable.tab_selsected_baijin_rb,
+            R.drawable.tab_select_bojin_rb,
+            R.drawable.tab_select_chaoji_rb,
+            R.drawable.tab_select_bojin_rb};
+    private CommonDialog commonDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_main);
+        commonDialog = new CommonDialog(getContext());
+        initView();
 
-        list.add(new ExperienceFragment());
+    }
+
+    private void initView() {
+
+        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel()==0){
+            list.add(new ExperienceFragment());
+        }else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel()<5){
+            list.add(new  FirstMemberFragment());
+            RadioButton mrb1 = findViewById(radioGroup.getChildAt(0).getId());
+            mrb1.setBackgroundResource(drawback[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]);
+            RadioButton mrb2 = findViewById(radioGroup.getChildAt(0).getId());
+            mrb2.setBackgroundResource(drawback[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()+1]);
+        }
         list.add(new FirstMemberFragment());
         list.add(new ClassifyFragment());
         list.add(new ArtistFragment());
@@ -61,16 +82,17 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface {
             public void OnRgsExtraCheckedChanged(RadioGroup radioGroup, int checkedId, int index) {
                 RadioButton radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
                 textView.setText(radioButton.getText().toString());
-                if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel()<5&&index!=4){
-
+                if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 5 && index != 4) {
+                    commonDialog.show();
+                    RadioButton mrb = findViewById(radioGroup.getChildAt(0).getId());
+                    mrb.performClick();
                 }
             }
         });
-
     }
 
     @Override
     public void onUpgradeInterface(int type) {
-
+        initView();
     }
 }

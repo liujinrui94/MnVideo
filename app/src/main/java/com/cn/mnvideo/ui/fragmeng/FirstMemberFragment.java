@@ -51,7 +51,13 @@ public class FirstMemberFragment extends BaseFragment {
     private int pageNum = 0;
 
     private ArrayList<Mnvideo> mnVideoArrayList = new ArrayList<>();
-
+    public static FirstMemberFragment newInstance(String title) {
+        FirstMemberFragment newFragment = new FirstMemberFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("title", title);
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_fist_member, container, false);
