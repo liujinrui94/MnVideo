@@ -19,6 +19,7 @@ import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.InfoBean;
 import com.cn.mnvideo.bean.Mnvideo;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
+import com.cn.mnvideo.ui.activity.MainActivity;
 import com.cn.mnvideo.utils.GlideUtils;
 import com.cn.mnvideo.utils.GsonUtil;
 import com.jude.rollviewpager.RollPagerView;
@@ -124,7 +125,9 @@ public class ExperienceFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         Intent mIntent = new Intent(getContext(), MVideoPlayActivity.class);
+//                        Intent mIntent = new Intent(getContext(), MainActivity.class);
                         mIntent.putExtra("videoUrl", model.getWaibuUrl());
+                        mIntent.putExtra("videotId",model.getId());
                         startActivity(mIntent);
                     }
                 });

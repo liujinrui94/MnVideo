@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         initPlayer();
-        image = findViewById(R.id.image);
-        setVideoThumbnail();
+//        image = findViewById(R.id.image);
+//        setVideoThumbnail();
         //请求权限:调节亮度
-        requestPermission();
+//        requestPermission();
 
     }
 

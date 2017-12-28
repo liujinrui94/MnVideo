@@ -17,7 +17,9 @@ public class Constant {
     public static final String VIDEO_RUL = "/videoPic/api/getVideoPics";
 
     public static final String LOGIN="/user/api/installAcount?";
+    public static final String PINGLUN=IP+"/userComment/api/getUserCommentList?";
 
+    public static final String RECHARGE=IP+"/user/api/recharge?";
 
 
 }

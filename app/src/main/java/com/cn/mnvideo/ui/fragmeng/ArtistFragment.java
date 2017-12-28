@@ -99,6 +99,7 @@ public class ArtistFragment extends BaseFragment {
                     public void onClick(View v) {
                         Intent mIntent=new Intent(getContext(), MVideoPlayActivity.class);
                         mIntent.putExtra("videoUrl",model.getWaibuUrl());
+                        mIntent.putExtra("videotId",model.getId());
                         startActivity(mIntent);
                     }
                 });

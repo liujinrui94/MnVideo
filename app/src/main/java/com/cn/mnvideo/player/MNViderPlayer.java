@@ -117,6 +117,8 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     private ImageView mn_player_iv_play_center;
     private ImageView iv_video_thumbnail;
 
+    private Boolean canSpeed = false;
+
     public MNViderPlayer(Context context) {
         this(context, null);
     }
@@ -208,7 +210,10 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         mn_player_surface_bg = (LinearLayout) inflate.findViewById(R.id.mn_player_surface_bg);
         iv_video_thumbnail = (ImageView) inflate.findViewById(R.id.iv_video_thumbnail);
 
-        mn_seekBar.setOnSeekBarChangeListener(this);
+        if (canSpeed) {
+            mn_seekBar.setOnSeekBarChangeListener(this);
+        }
+
         mn_iv_play_pause.setOnClickListener(this);
         mn_iv_fullScreen.setOnClickListener(this);
         mn_iv_back.setOnClickListener(this);
@@ -740,6 +745,10 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
+        if (!canSpeed){
+            return false;
+        }
+
         if (!isPrepare || isLockScreen) {
             return false;
         }
@@ -995,22 +1004,22 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void resetMediaPlayer() {
         try {
-//            if (mediaPlayer != null) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-                    mediaPlayer.stop();
-                }
-                //重置mediaPlayer
-                mediaPlayer.reset();
-                //添加播放路径
-                mediaPlayer.setDataSource(videoPath);
-                // 准备开始,异步准备，自动在子线程中
-                mediaPlayer.prepareAsync();
-                //视频缩放模式
-                mediaPlayer.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
-//            } else {
-//                startVideo();
-//            }
+            if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                mediaPlayer.stop();
+            }
+            //重置mediaPlayer
+            mediaPlayer.reset();
+            //添加播放路径
+            mediaPlayer.setDataSource(videoPath);
+            // 准备开始,异步准备，自动在子线程中
+            mediaPlayer.prepareAsync();
+            //视频缩放模式
+            mediaPlayer.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+            } else {
+                startVideo();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1281,4 +1290,12 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         void onCompletion(MediaPlayer mediaPlayer);
     }
 
+
+    public Boolean getCanSpeed() {
+        return canSpeed;
+    }
+
+    public void setCanSpeed(Boolean canSpeed) {
+        this.canSpeed = canSpeed;
+    }
 }

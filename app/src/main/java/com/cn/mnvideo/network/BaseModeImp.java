@@ -22,6 +22,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
         @Override
         public void postBaseNetRequestModel(String requestString, final BaseNetRequestCallBack callBack) {
+            AppLogger.d(requestString);
             OkHttpUtils.post().url( requestString).build().execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {

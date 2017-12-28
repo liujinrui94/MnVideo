@@ -13,15 +13,43 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cn.mnvideo.R;
+import com.cn.mnvideo.adapter.BaseRecyclerAdapter;
+import com.cn.mnvideo.adapter.SmartViewHolder;
+import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.BaseActivity;
+import com.cn.mnvideo.base.Constant;
+import com.cn.mnvideo.bean.Mnvideo;
+import com.cn.mnvideo.bean.PingLunInfo;
+import com.cn.mnvideo.network.BaseNetRetRequestPresenter;
+import com.cn.mnvideo.network.NetRequestView;
 import com.cn.mnvideo.player.MNViderPlayer;
+import com.cn.mnvideo.utils.GlideUtils;
+import com.cn.mnvideo.utils.GsonUtil;
 import com.cn.mnvideo.utils.PlayerUtils;
+import com.cn.mnvideo.utils.ToastUtils;
+import com.google.gson.reflect.TypeToken;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * @author: LiuJinrui
@@ -29,59 +57,95 @@ import com.cn.mnvideo.utils.PlayerUtils;
  * @time: 2017/12/21 0:24
  * @description:
  */
-public class MVideoPlayActivity extends BaseActivity {
+public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
 
 
     private static final String TAG = "MNViderPlayer";
 
-    private final String url1 = "http://svideo.spriteapp.com/video/2016/0703/7b5bc740-4134-11e6-ac2b-d4ae5296039d_wpd.mp4";
-    private final String url2 = "http://bvideo.spriteapp.cn/video/2016/0704/577a4c29e1f14_wpd.mp4";
-    //这个地址是错误的
-    private final String url3 = "http://weibo.com/p/23044451f0e5c4b762b9e1aa49c3091eea4d94";
-    //本地视频
-    private final String url4 = "/storage/emulated/0/DCIM/Camera/VID_20170605_143722.mp4";
 
     private MNViderPlayer mnViderPlayer;
     private String url;
+    private String tid;
+
+    private int pageNum = 1;
+
+    @BindView(R.id.activity_mvideo_pinglun_smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
+    @BindView(R.id.activity_mvideo_pinglun_rlv)
+    RecyclerView recyclerView;
+    private final String url1 = "http://bvideo.spriteapp.cn/video/2016/0704/577a4c29e1f14_wpd.mp4";
+    private String qingqiu;
+
+    private BaseRecyclerAdapter baseRecyclerAdapter;
+
+    private List<PingLunInfo> lunInfoList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        url =getIntent().getStringExtra("videoUrl");
+        url = getIntent().getStringExtra("videoUrl");
+        Log.e("AAA",url);
+        url = url1;
+        tid = getIntent().getStringExtra("videotId");
 
         initViews();
         initPlayer();
+        smartRefreshLayout.autoRefresh();
 
-    }
 
-
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.System.canWrite(this)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("提示");
-                builder.setMessage("视频播放调节亮度需要申请权限");
-                builder.setNegativeButton("取消", null);
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                                Uri.parse("package:" + getPackageName()));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivityForResult(intent, 100);
-                    }
-                });
-                builder.show();
-            }
-        }
     }
 
     private void initViews() {
         mnViderPlayer = (MNViderPlayer) findViewById(R.id.mn_videoplayer);
-        mnViderPlayer.playVideo(url, "标题");
+        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 1) {
+            mnViderPlayer.setCanSpeed(false);
+        } else {
+            mnViderPlayer.setCanSpeed(true);
+        }
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                pageNum = 1;
+                qingqiu = Constant.PINGLUN + "pageNum=" + pageNum + "&tid=" + tid;
+                new BaseNetRetRequestPresenter(MVideoPlayActivity.this).GetNetRetRequest();
+            }
+        });
+
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                pageNum++;
+                qingqiu = Constant.PINGLUN + "pageNum=" + pageNum + "&tid=" + tid;
+                new BaseNetRetRequestPresenter(MVideoPlayActivity.this).GetNetRetRequest();
+            }
+        });
     }
+
+    private void initRlv(List<PingLunInfo> mlunInfoList) {
+
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+
+        Log.e("aaa",mlunInfoList.toString());
+
+
+        baseRecyclerAdapter = new BaseRecyclerAdapter<PingLunInfo>(mlunInfoList, R.layout.pinglun_info_item) {
+            @Override
+            protected void onBindViewHolder(SmartViewHolder holder, PingLunInfo model, int position) {
+                holder.text(R.id.pinglun_item_userName, model.getUserName());
+                holder.text(R.id.pinglun_item_content, model.getContent());
+                holder.text(R.id.pinglun_item_createTime, model.getCreateTime());
+
+            }
+        };
+        recyclerView.setAdapter(baseRecyclerAdapter);
+
+    }
+
 
     private void initPlayer() {
 
@@ -90,7 +154,7 @@ public class MVideoPlayActivity extends BaseActivity {
         mnViderPlayer.setIsNeedBatteryListen(true);         //设置电量监听
         mnViderPlayer.setIsNeedNetChangeListen(true);       //设置网络监听
         //第一次进来先设置数据
-        mnViderPlayer.setDataSource(url2, "标题");
+        mnViderPlayer.setDataSource(url, "标题");
 
         //播放完成监听
         mnViderPlayer.setOnCompletionListener(new MNViderPlayer.OnCompletionListener() {
@@ -119,33 +183,12 @@ public class MVideoPlayActivity extends BaseActivity {
 
     }
 
-    public void btn01(View view) {
-        mnViderPlayer.playVideo(url1, "标题1");
-    }
-
-    public void btn02(View view) {
-        //position表示需要跳转到的位置
-        mnViderPlayer.playVideo(url2, "标题2", 30000);
-
-    }
-
-    public void btn03(View view) {
-        mnViderPlayer.playVideo(url3, "标题3");
-    }
-
-    public void btn04(View view) {
-        if (hasPermission(this, "android.permission.WRITE_EXTERNAL_STORAGE")) {
-            mnViderPlayer.playVideo(url4, "标题4");
-        } else {
-            Toast.makeText(this, "没有存储权限", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onPause() {
         super.onPause();
         //暂停
-        if (mnViderPlayer!=null){
+        if (mnViderPlayer != null) {
             mnViderPlayer.pauseVideo();
         }
 
@@ -156,9 +199,6 @@ public class MVideoPlayActivity extends BaseActivity {
         if (mnViderPlayer.isFullScreen()) {
             mnViderPlayer.setOrientationPortrait();
             return;
-        }else if (mnViderPlayer != null) {
-            mnViderPlayer.destroyVideo();
-            mnViderPlayer = null;
         }
         super.onBackPressed();
     }
@@ -179,4 +219,38 @@ public class MVideoPlayActivity extends BaseActivity {
         return perm == PackageManager.PERMISSION_GRANTED;
     }
 
+    @Override
+    public void showCordError(String msg, int sign) {
+        ToastUtils.getInstance().showLongToast(msg);
+    }
+
+    @Override
+    public String getPostJsonString() {
+
+        return qingqiu;
+    }
+
+    @Override
+    public void NetInfoResponse(String data, int sign) {
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(data);
+            String data1 = jsonObject.getString("records");
+
+            lunInfoList = (List<PingLunInfo>) GsonUtil.getInstance().fromJson(data1, new TypeToken<List<PingLunInfo>>() {
+            }.getRawType());
+            initRlv(lunInfoList);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public int sign() {
+        return 0;
+    }
 }
