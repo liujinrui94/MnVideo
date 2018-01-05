@@ -3,6 +3,8 @@ package com.cn.mnvideo.network;
 
 import com.cn.mnvideo.utils.AppLogger;
 
+import java.text.ParseException;
+
 /**
  * @author: LiuJinrui
  * @email: liujinrui@qdcftx.com
@@ -24,7 +26,11 @@ public class BaseNetRetRequestPresenter {
         baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
             @Override
             public void SucceedCallBack(String data) {
-                netRequestView.NetInfoResponse(data, netRequestView.sign());
+                try {
+                    netRequestView.NetInfoResponse(data, netRequestView.sign());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -43,7 +49,11 @@ public class BaseNetRetRequestPresenter {
         baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
             @Override
             public void SucceedCallBack(String data) {
-                netRequestView.NetInfoResponse(data, netRequestView.sign());
+                try {
+                    netRequestView.NetInfoResponse(data, netRequestView.sign());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

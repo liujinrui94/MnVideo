@@ -1,69 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e2e2e2">
+    android:background="#e2e2e2"
+    android:orientation="vertical">
 
 
-    <LinearLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/activity_mvideo_pinglun_smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <com.cn.mnvideo.player.MNViderPlayer
-            android:id="@+id/mn_videoplayer"
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="#252525"
-            app:mnFirstNeedPlay="false" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/line"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="热门评论"
-            android:drawablePadding="10dp"
-            android:textColor="@color/colorAccent"
-            android:textSize="15dp" />
-
-        <android.support.v7.widget.RecyclerView
-
-            android:id="@+id/activity_mvideo_image_rlv"
-            android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content">
 
-
-        </android.support.v7.widget.RecyclerView>
-
-
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/activity_mvideo_pinglun_smartRefreshLayout"
+        </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            <com.cn.mnvideo.player.MNViderPlayer
+                android:id="@+id/mn_videoplayer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="290dp"
+                android:background="#252525"
+                app:mnFirstNeedPlay="false" />
 
-            </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/line"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="精彩截图"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="1px"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="1px"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="1px"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="1px"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="1px"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="1px"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/line"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="热门评论"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp" />
 
             <android.support.v7.widget.RecyclerView
 
                 android:id="@+id/activity_mvideo_pinglun_rlv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
 
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            <ImageView
+                android:id="@+id/ic_nocomment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.scwang.smartrefresh.layout.footer.ClassicsFooter>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_nocomment"
+                android:visibility="gone" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#e2e2e2"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/my_header"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <EditText
+            android:id="@+id/m_videoplayer_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入评论" />
+
+        <TextView
+            android:id="@+id/pinglun_fabiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_button_theme_8"
+            android:padding="5dp"
+            android:text="发送" />
+
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>

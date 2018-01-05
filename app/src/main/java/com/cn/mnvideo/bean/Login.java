@@ -12,6 +12,9 @@ public class Login  {
 
     private String tuiguangma;
 
+
+
+
     public String getUserId() {
         return userId;
     }

@@ -11,9 +11,20 @@ public class UserInfo extends BaseResponseParams {
     private String name;
     private String password;
     private int memberlevel;
-    private String userHead;
+    private String headImg;
 
     private String id;
+
+    private String endTime;
+
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
     public String getId() {
         return id;
@@ -47,11 +58,11 @@ public class UserInfo extends BaseResponseParams {
         this.memberlevel = memberlevel;
     }
 
-    public String getUserHead() {
-        return userHead;
+    public String getHeadImg() {
+        return headImg;
     }
 
-    public void setUserHead(String userHead) {
-        this.userHead = userHead;
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
     }
 }

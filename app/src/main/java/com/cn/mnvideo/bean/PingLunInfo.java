@@ -12,6 +12,25 @@ public class PingLunInfo  {
     private String content;
     private String createTime;
     private String userName;
+    private String headImg;
+    private String uid;
+
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getContent() {
         return content;

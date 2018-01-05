@@ -1,5 +1,7 @@
 package com.cn.mnvideo.network;
 
+import java.text.ParseException;
+
 /**
  * @author: LiuJinrui
  * @email: liujinrui@qdcftx.com
@@ -14,7 +16,7 @@ public interface NetRequestView {
 
     String getPostJsonString();
 
-    void NetInfoResponse(String data,int sign);
+    void NetInfoResponse(String data,int sign) throws ParseException;
     int sign();
 
 }

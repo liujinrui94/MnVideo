@@ -2,12 +2,9 @@ package com.cn.mnvideo.ui.fragmeng;
 
 import android.Manifest;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +18,7 @@ import com.cn.mnvideo.utils.AppLogger;
 import com.cn.mnvideo.utils.GlideUtils;
 import com.cn.mnvideo.utils.PermissionsUtil;
 import com.cn.mnvideo.utils.ToastUtils;
-import com.cn.mnvideo.widget.CommonDialog;
+import com.cn.mnvideo.widget.RadioButtonDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,8 +72,11 @@ public class MineFragment extends BaseFragment {
         upgrade_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonDialog commonDialog = new CommonDialog(getContext());
-                commonDialog.show();
+//                startActivity(new Intent(getContext(), UpActivity.class));
+                RadioButtonDialog radioButtonDialog=new RadioButtonDialog(getActivity(),R.style.Dialog);
+                radioButtonDialog.show();
+
+
             }
         });
     }
@@ -84,7 +84,7 @@ public class MineFragment extends BaseFragment {
 
     private void initView() {
 
-        GlideUtils.getInstance().loadNetImage(AppApplication.getInstance().getBaseUserInfo().getUserHead(), iv_header);
+        GlideUtils.getInstance().loadNetImage(AppApplication.getInstance().getBaseUserInfo().getHeadImg(), iv_header);
         tv_account.setText(AppApplication.getInstance().getBaseUserInfo().getId());
         tv_password.setText(AppApplication.getInstance().getBaseUserInfo().getPassword());
 

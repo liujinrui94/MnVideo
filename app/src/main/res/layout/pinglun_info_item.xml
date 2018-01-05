@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,22 +18,26 @@
 
         <TextView
             android:id="@+id/pinglun_item_userName"
-            android:text="@string/app_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/app_name" />
 
         <TextView
             android:id="@+id/pinglun_item_content"
-            android:text="@string/app_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/blackTextColor"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/pinglun_item_createTime"
-            android:text="@string/app_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="10dp" />
 
     </LinearLayout>
+
 
 </LinearLayout>

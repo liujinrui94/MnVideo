@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import com.cn.mnvideo.mode.NetEventInterface;
+import com.cn.mnvideo.ui.activity.MainActivity;
 import com.cn.mnvideo.utils.NetUtil;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class NetBroadcastReceiver extends BroadcastReceiver {
     private NetEventInterface netEvent;
@@ -26,5 +29,7 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
     public void setNetEvent(NetEventInterface netEvent) {
         this.netEvent = netEvent;
     }
+
+
 
 }

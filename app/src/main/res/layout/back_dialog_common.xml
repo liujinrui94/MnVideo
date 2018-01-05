@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:onClick="onClick"
         android:layout_marginTop="15dp"
         android:background="@drawable/selector_button_theme_8"
         android:padding="10dp"
@@ -41,6 +42,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/selector_button_theme_8"
         android:padding="10dp"
+        android:visibility="gone"
         android:text="微信扫码支付"
         android:textColor="@color/whiteTextColor" />
 

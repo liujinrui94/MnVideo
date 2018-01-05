@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MNViderPlayer";
 
-    private final String url1 = "http://svideo.spriteapp.com/video/2016/0703/7b5bc740-4134-11e6-ac2b-d4ae5296039d_wpd.mp4";
-    private final String url2 = "http://bvideo.spriteapp.cn/video/2016/0704/577a4c29e1f14_wpd.mp4";
+    private final String url1 = "http://v.wxwwfx.org:8088/vip7/1.mp4";
+    private final String url2 = "http://v.wxwwfx.org:8088/vip7/1.mp4";
     //这个地址是错误的
-    private final String url3 = "http://weibo.com/p/23044451f0e5c4b762b9e1aa49c3091eea4d94";
+    private final String url3 = "http://v.wxwwfx.org:8088/vip7/1.mp4";
     //本地视频
-    private final String url4 = "/storage/emulated/0/DCIM/Camera/VID_20170605_143722.mp4";
+    private final String url4 = "http://v.wxwwfx.org:8088/vip7/1.mp4";
 
     private MNViderPlayer mnViderPlayer;
 
@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         mnViderPlayer.setIsNeedNetChangeListen(true);       //设置网络监听
         //第一次进来先设置数据
         mnViderPlayer.setDataSource(url2, "标题");
+
+
 
         //播放完成监听
         mnViderPlayer.setOnCompletionListener(new MNViderPlayer.OnCompletionListener() {

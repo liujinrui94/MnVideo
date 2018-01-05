@@ -32,7 +32,7 @@
             android:checked="true"
             android:drawableTop="@drawable/tab_selected_home_rb"
             android:gravity="center"
-            android:text="首页"
+            android:text="体验区"
             tools:ignore="SpUsage" />
 
 

@@ -18,13 +18,17 @@
     <application
         android:name=".base.AppApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.cn.mnvideo.ui.activity.MainActivity"></activity>
-        <activity android:name="com.cn.mnvideo.ui.activity.SplashActivity">
+        <activity android:name="com.cn.mnvideo.ui.activity.MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.cn.mnvideo.ui.activity.SplashActivity"
+            android:theme="@style/AppWelcome"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,12 +36,19 @@
             </intent-filter>
 
         </activity>
-
+        <activity android:name=".ui.activity.PayWebViewActivity"
+            android:screenOrientation="portrait"
+           ></activity>
+        <activity android:name=".ui.activity.UpActivity"
+            android:theme="@style/DefaultFullScreenDialogAnimation"
+            ></activity>
         <activity
             android:name=".ui.activity.MVideoPlayActivity"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.cn.mnvideo.ui.activity.TabMainActivity">
+        <activity android:name="com.cn.mnvideo.ui.activity.TabMainActivity"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>

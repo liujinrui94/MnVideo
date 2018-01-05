@@ -12,6 +12,9 @@
     <color name="colorPlayerProgressBg">#e1767676</color>
     <color name="colorPlayerProgressSecond">#c1c1c1</color>
     <color name="colorPlayerProgress">#FFFFFF</color>
+
+    <color name="colorPlayer">#50767676</color>
+
     <!-- 透明 -->
     <color name="colorPlayerTrans">#00000000</color>
     <color name="text_common_dark_grey">#707070</color>

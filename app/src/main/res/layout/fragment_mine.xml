@@ -17,7 +17,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icon" />
 
         <TextView
             android:id="@+id/fragment_mine_tv_account"

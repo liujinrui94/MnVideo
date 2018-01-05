@@ -8,18 +8,28 @@ package com.cn.mnvideo.base;
  */
 public class Constant {
 
+
+    public static final String REID = "reId";
+
+
     public static final String RESPONSE_SUCCESS = "0000";
 
-    public static final String TUIGUANGMA="4b45eeef1ce74ab89b0b3634cf2afb92";
+    public static final String TUIGUANGMA = "4b45eeef1ce74ab89b0b3634cf2afb92";
 
     public static final String IP = "http://222.186.173.169:8080";
 
     public static final String VIDEO_RUL = "/videoPic/api/getVideoPics";
 
-    public static final String LOGIN="/user/api/installAcount?";
-    public static final String PINGLUN=IP+"/userComment/api/getUserCommentList?";
+    public static final String LOGIN = "/user/api/installAcount?";
+    public static final String PINGLUN = IP + "/userComment/api/getUserCommentList?";
 
-    public static final String RECHARGE=IP+"/user/api/recharge?";
+    public static final String RECHARGE = IP + "/user/api/recharge?";
+
+
+    public static final String FACHUPINGLUN = IP + "/userComment/api/publishComment?";
+
+
+    public static final String PAY = IP + "/pay/json/pay?";
 
 
 }

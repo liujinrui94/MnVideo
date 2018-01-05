@@ -1,7 +1,12 @@
 package com.cn.mnvideo.network;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.BaseResponseParams;
 import com.cn.mnvideo.mode.BaseNetRequestModel;
@@ -38,7 +43,11 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
                         jsonObject = new JSONObject(response);
                         data = jsonObject.optJSONObject("info");
                         if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
-                            callBack.SucceedCallBack(data.toString());
+                            if (null!=data){
+                                callBack.SucceedCallBack(data.toString());
+                            }else {
+                                callBack.SucceedCallBack("");
+                            }
                         } else {
                             callBack.CodeError(jsonObject.getString("responseMsg"));
                         }

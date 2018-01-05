@@ -18,6 +18,7 @@
         <item name="android:activityCloseEnterAnimation">@anim/activity_into_from_left</item>
         <item name="android:activityCloseExitAnimation">@anim/activity_out_to_right</item>
     </style>
+
     <style name="CommonDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -27,6 +28,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
     <style name="tab_main_activity_radio_button">
         <!-- 水平居中 -->
         <item name="android:gravity">center</item>
@@ -39,6 +41,7 @@
         <item name="android:button">@null</item>
         <item name="android:background">@mipmap/ic_tab_bottom_bg</item>
     </style>
+
     <style name="tab_button">
         <item name="android:textSize">12.0dip</item>
         <item name="android:textColor">@drawable/menu_tab_name_selector</item>
@@ -86,6 +89,7 @@
         <item name="android:textColor">@color/blackTextColor</item>
         <item name="android:textSize" tools:ignore="SpUsage">18dp</item>
     </style>
+
     <style name="text_white_18dp">
         <item name="android:textColor">@color/whiteTextColor</item>
         <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
@@ -95,10 +99,12 @@
         <item name="android:textColor">@color/grayTextColor</item>
         <item name="android:textSize" tools:ignore="SpUsage">13dp</item>
     </style>
+
     <style name="text_gray_15dp">
         <item name="android:textColor">@color/grayTextColor</item>
         <item name="android:textSize" tools:ignore="SpUsage">15dp</item>
     </style>
+
     <style name="text_gray_18dp">
         <item name="android:textColor">@color/bg_grey_dark</item>
         <item name="android:textSize" tools:ignore="SpUsage">18dp</item>
@@ -148,5 +154,44 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+    </style>
+
+<!--    <style name="DefaultFullScreenDialogAnimation" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>//将背景设置成透明的
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>//设置窗体外面允不允许点击
+        <item name="android:windowEnterAnimation">@anim/dialog_ios_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_ios_scale_out</item>
+    </style>-->
+
+
+    <style name="DefaultFullScreenDialogAnimation" parent="Theme.AppCompat.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+        <item name="android:activityOpenEnterAnimation">@anim/into_from_bottom</item>
+        <item name="android:activityCloseExitAnimation">@anim/out_to_bottom</item>
+    </style>
+    <style name="AppWelcome" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowBackground">@mipmap/qidong</item>
     </style>
 </resources>

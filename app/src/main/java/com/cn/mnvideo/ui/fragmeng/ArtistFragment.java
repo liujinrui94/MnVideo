@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import com.cn.mnvideo.R;
 import com.cn.mnvideo.adapter.BaseRecyclerAdapter;
 import com.cn.mnvideo.adapter.SmartViewHolder;
+import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.BaseFragment;
 import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.InfoBean;
@@ -21,6 +23,7 @@ import com.cn.mnvideo.bean.Mnvideo;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
 import com.cn.mnvideo.utils.GlideUtils;
 import com.cn.mnvideo.utils.GsonUtil;
+import com.cn.mnvideo.widget.RadioButtonDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -47,7 +50,7 @@ public class ArtistFragment extends BaseFragment {
 
     private InfoBean mInfoBean;
 
-    private int pageNum = 0;
+    private int pageNum = 1;
 
     private ArrayList<Mnvideo> mnVideoArrayList = new ArrayList<>();
 
@@ -66,8 +69,8 @@ public class ArtistFragment extends BaseFragment {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                pageNum = 0;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=2&pageNum=" + pageNum, 0);
+                pageNum = 1;
+                getData(Constant.IP + Constant.VIDEO_RUL + "?type=6&pageNum=" + pageNum, 0);
             }
         });
 
@@ -75,7 +78,7 @@ public class ArtistFragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageNum++;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=2&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "?type=6&pageNum=" + pageNum, 0);
             }
         });
 
@@ -93,13 +96,23 @@ public class ArtistFragment extends BaseFragment {
             protected void onBindViewHolder(SmartViewHolder holder, final Mnvideo model, int position) {
                 holder.text(R.id.rlv_item_tv, model.getTitle());
                 GlideUtils.getInstance().loadNetImage(model.getFileUrl(), (ImageView) holder.itemView.findViewById(R.id.rlv_item_iv));
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 6 ) {
+                            new RadioButtonDialog(getActivity()).show();
+                            return;
+                        }
                         Intent mIntent=new Intent(getContext(), MVideoPlayActivity.class);
                         mIntent.putExtra("videoUrl",model.getWaibuUrl());
                         mIntent.putExtra("videotId",model.getId());
+                        mIntent.putExtra("fileUrlXq", model.getFileUrlXq());
+                        mIntent.putExtra("fileUrlJt1", model.getFileUrlJt1());
+                        mIntent.putExtra("fileUrlJt2", model.getFileUrlJt2());
+                        mIntent.putExtra("fileUrlJt3", model.getFileUrlJt3());
+                        mIntent.putExtra("fileUrlJt4", model.getFileUrlJt4());
+                        mIntent.putExtra("fileUrlJt5", model.getFileUrlJt5());
                         startActivity(mIntent);
                     }
                 });
@@ -113,8 +126,8 @@ public class ArtistFragment extends BaseFragment {
     @Override
     public void NetInfoResponse(String data, int sign) {
         progressCancel();
-        switch (sign) {
-            case 0:
+//        switch (sign) {
+//            case 0:
                 mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
 
                 if (smartRefreshLayout.isRefreshing() && mBaseRecyclerAdapter != null) {
@@ -138,11 +151,11 @@ public class ArtistFragment extends BaseFragment {
                 if (mInfoBean.getRecords().size() < 20) {
                     smartRefreshLayout.setLoadmoreFinished(true);
                 }
-                break;
-            case 1:
-                break;
+//                break;
+//            case 1:
+//                break;
 
-        }
+//        }
 
     }
 

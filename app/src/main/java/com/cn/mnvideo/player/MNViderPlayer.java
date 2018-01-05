@@ -36,11 +36,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cn.mnvideo.R;
+import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.utils.LightnessControl;
 import com.cn.mnvideo.utils.PlayerUtils;
 import com.cn.mnvideo.view.ProgressWheel;
+import com.cn.mnvideo.widget.RadioButtonDialog;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,7 +62,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     static final Handler myHandler = new Handler(Looper.getMainLooper()) {
     };
-
     // SurfaceView的创建比较耗时，要注意
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
@@ -119,6 +121,10 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     private Boolean canSpeed = false;
 
+    private Boolean BoFang = true;
+
+    private RadioButtonDialog backCommonDialog;
+    private int amin;
     public MNViderPlayer(Context context) {
         this(context, null);
     }
@@ -135,6 +141,11 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         initAttrs(context, attrs);
         //其他
         init();
+
+        int max=70;
+        int min=36;
+        Random random = new Random();
+        amin=random.nextInt(max)%min+min;
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -210,10 +221,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         mn_player_surface_bg = (LinearLayout) inflate.findViewById(R.id.mn_player_surface_bg);
         iv_video_thumbnail = (ImageView) inflate.findViewById(R.id.iv_video_thumbnail);
 
-        if (canSpeed) {
-            mn_seekBar.setOnSeekBarChangeListener(this);
-        }
-
+        mn_seekBar.setOnSeekBarChangeListener(this);
         mn_iv_play_pause.setOnClickListener(this);
         mn_iv_fullScreen.setOnClickListener(this);
         mn_iv_back.setOnClickListener(this);
@@ -244,10 +252,10 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
                 mediaPlayerY = getY();
                 playerViewW = getWidth();
                 playerViewH = getHeight();
-                Log.i(TAG, "控件信息---X：" + mediaPlayerX + "，Y：" + mediaPlayerY);
-                Log.i(TAG, "控件信息---playerViewW：" + playerViewW + "，playerViewH：" + playerViewH);
             }
         }, 1000);
+
+
     }
 
     private void initViews() {
@@ -299,7 +307,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     private void initSurfaceView() {
-        Log.i(TAG, "initSurfaceView");
         // 得到SurfaceView容器，播放的内容就是显示在这个容器里面
         surfaceHolder = mn_palyer_surfaceView.getHolder();
         surfaceHolder.setKeepScreenOn(true);
@@ -316,9 +323,23 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    private void showD() {
+        if (null != backCommonDialog) {
+            backCommonDialog.show();
+        } else {
+            backCommonDialog = new RadioButtonDialog(getContext());
+            backCommonDialog.show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
+        if (!BoFang) {
+            showD();
+            return;
+        }
+
         if (i == R.id.mn_iv_play_pause) {
             if (mediaPlayer != null) {
                 if (mediaPlayer.isPlaying()) {
@@ -427,6 +448,8 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     //--------------------------------------------------------------------------------------
 
     private void initTimeTask() {
+
+
         timer_video_time = new Timer();
         task_video_timer = new TimerTask() {
             @Override
@@ -438,7 +461,14 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
                             return;
                         }
                         //设置时间
-                        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + " / " + PlayerUtils.converLongTimeToStr(mediaPlayer.getDuration())));
+//                        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + " / " + PlayerUtils.converLongTimeToStr(mediaPlayer.getDuration())));
+                        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + " / " + PlayerUtils.converLongTimeToStr(amin*100000)));
+                        if (!canSpeed) {
+                            if (mediaPlayer.getCurrentPosition()>8){
+                                stopVideo();
+                                showD();
+                            }
+                        }
                         //进度条
                         int progress = mediaPlayer.getCurrentPosition();
                         mn_seekBar.setProgress(progress);
@@ -497,6 +527,16 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
+        if (fromUser && !canSpeed) {
+            if (backCommonDialog == null) {
+                backCommonDialog = new RadioButtonDialog(getContext());
+                backCommonDialog.show();
+            } else {
+                backCommonDialog.show();
+            }
+
+        }
+
     }
 
     @Override
@@ -520,7 +560,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     //播放
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.i(TAG, "surfaceCreated");
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.setDisplay(holder); // 添加到容器中
@@ -557,7 +596,8 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.i(TAG, "surfaceChanged---width：" + width + ",height:" + height);
+
+
     }
 
     @Override
@@ -569,7 +609,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
             video_position = mediaPlayer.getCurrentPosition();
         }
         destroyControllerTask(true);
-        Log.i(TAG, "surfaceDestroyed---video_position：" + video_position);
     }
 
     //MediaPlayer
@@ -586,7 +625,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        Log.i(TAG, "二级缓存onBufferingUpdate: " + percent);
         if (percent >= 0 && percent <= 100) {
             int secondProgress = mp.getDuration() * percent / 100;
             mn_seekBar.setSecondaryProgress(secondProgress);
@@ -595,7 +633,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        Log.i(TAG, "发生错误error:" + what);
         if (what != -38) {  //这个错误不管
             showErrorView();
         }
@@ -606,6 +643,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     public void onPrepared(final MediaPlayer mediaPlayer) {
 
         mediaPlayer.start(); // 开始播放
+
         //是否开始播放
         if (!isPlaying) {
             mediaPlayer.pause();
@@ -664,12 +702,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
             surfaceViewW = videoWidth * parentHeight / videoHeight;
         }
 
-        Log.i(TAG, "fitVideoSize---" +
-                "videoWidth：" + videoWidth + ",videoHeight:" + videoHeight +
-                ",parentWidth:" + parentWidth + ",parentHeight:" + parentHeight +
-                ",screenWidth:" + screenWidth + ",screenHeight:" + screenHeight +
-                ",surfaceViewW:" + surfaceViewW + ",surfaceViewH:" + surfaceViewH
-        );
         //改变surfaceView的大小
         ViewGroup.LayoutParams params = mn_player_surface_bg.getLayoutParams();
         params.height = surfaceViewH;
@@ -745,7 +777,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
-        if (!canSpeed){
+        if (!canSpeed) {
             return false;
         }
 
@@ -1005,18 +1037,18 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     private void resetMediaPlayer() {
         try {
             if (mediaPlayer != null) {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-                mediaPlayer.stop();
-            }
-            //重置mediaPlayer
-            mediaPlayer.reset();
-            //添加播放路径
-            mediaPlayer.setDataSource(videoPath);
-            // 准备开始,异步准备，自动在子线程中
-            mediaPlayer.prepareAsync();
-            //视频缩放模式
-            mediaPlayer.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    mediaPlayer.stop();
+                }
+                //重置mediaPlayer
+                mediaPlayer.reset();
+                //添加播放路径
+                mediaPlayer.setDataSource(videoPath);
+                // 准备开始,异步准备，自动在子线程中
+                mediaPlayer.prepareAsync();
+                //视频缩放模式
+                mediaPlayer.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
             } else {
                 startVideo();
             }
@@ -1047,6 +1079,16 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
             isPlaying = false;
         }
     }
+
+    public void stopVideo() {
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+            mn_iv_play_pause.setVisibility(GONE);
+            video_position = mediaPlayer.getCurrentPosition();
+            isPlaying = false;
+        }
+    }
+
 
     /**
      * 竖屏
@@ -1297,5 +1339,9 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     public void setCanSpeed(Boolean canSpeed) {
         this.canSpeed = canSpeed;
+    }
+
+    public void setBoFang(Boolean boFang) {
+        BoFang = boFang;
     }
 }
