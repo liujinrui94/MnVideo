@@ -20,8 +20,8 @@
     <ImageView
         android:id="@+id/common_dialog_iv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_chongzhiguanggao" />
+        android:layout_height="200dp"
+         />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +70,6 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:checked="true"
             android:layout_weight="1"
             android:text="39" />
 

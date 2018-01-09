@@ -36,8 +36,14 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
 
     private ImageView imageView;
 
-    private String[] url = {"http://180.97.220.157:8442/chong/1.png", "http://180.97.220.157:8442/chong/2.png", "http://180.97.220.157:8442/chong/3.png",
-            "http://180.97.220.157:8442/chong/4.png", "http://180.97.220.157:8442/chong/5.png"};
+    private String[] url = {
+            "chong/1j.jpg",
+            "chong/2j.jpg",
+            "chong/3j.jpg",
+            "chong/4j.jpg",
+            "chong/5j.jpg",
+            "chong/6j.jpg",
+            "chong/7j.jpg"};
 
 
     //可以看到两个构造器，想自定义样式的就用第二个啦
@@ -82,7 +88,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         setContentView(view);
         imageView = view.findViewById(R.id.common_dialog_iv);
 
-        GlideUtils.getInstance().loadNetImage(url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()], imageView);
+        GlideUtils.getInstance().loadNetImage(Constant.INMAGE_IP+url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()], imageView);
 
         view.findViewById(R.id.wx_pay_btn).setOnClickListener(this);
         view.findViewById(R.id.albb_pay_btn).setOnClickListener(this);
@@ -96,6 +102,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         rbtn1.setText((22 - AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 2) + "");
         rbtn2.setText((39 - AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 2) + "");
         rbtn3.setText((72 - AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 2) + "");
+        rbtn2.performClick();
         mPayInfo.setMoney(Long.parseLong(rbtn2.getText().toString()));
         groupBroadcast.setOnCheckedChangeListener(listener);
         //设置dialog大小，这里是一个小赠送，模块好的控件大小设置
@@ -114,6 +121,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+
             mPayInfo.setMoney(Long.parseLong(radioButton.getText().toString()));
         }
     };
@@ -126,8 +134,8 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
         mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
         if (null == mPayInfo.getMoney()) {
-            ToastUtils.getInstance().showShortToast("请选择套餐");
-            return;
+           ToastUtils.getInstance().showShortToast("套餐不能为空");
+           return;
         }
         switch (view.getId()) {
             case R.id.wx_pay_btn:

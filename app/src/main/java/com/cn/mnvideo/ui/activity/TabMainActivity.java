@@ -60,7 +60,7 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface, N
             R.drawable.tab_select_chaoji_rb,
             R.drawable.tab_select_bojin_rb};
 
-    private String[] strings = {"体验区", "钻石会员", "黑金会员", "紫钻会员", "蓝钻会员", "皇冠会员"
+    private String[] strings = { "钻石会员", "黑金会员", "紫钻会员", "蓝钻会员", "皇冠会员","蓝钻会员"
     };
     private RadioButtonDialog commonDialog;
 

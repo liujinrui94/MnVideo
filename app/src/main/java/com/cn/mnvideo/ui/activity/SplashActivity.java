@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.cn.mnvideo.R;
 import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.BaseActivity;
 import com.cn.mnvideo.base.Constant;
@@ -36,7 +37,7 @@ public class SplashActivity extends BaseActivity implements NetRequestView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Constant.TUIGUANGMA = getResources().getString(R.string.TGM);
         if (TextUtils.isEmpty(JPushInterface.getRegistrationID(this))) {
             Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -653,8 +653,11 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         }
         isPrepare = true;
         // 把得到的总长度和进度条的匹配
-        mn_seekBar.setMax(mediaPlayer.getDuration());
-        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + "/" + PlayerUtils.converLongTimeToStr(mediaPlayer.getDuration())));
+//        mn_seekBar.setMax(mediaPlayer.getDuration());
+//        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + "/" + PlayerUtils.converLongTimeToStr(mediaPlayer.getDuration())));
+
+        mn_seekBar.setMax(mediaPlayer.getDuration()*10);
+        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + "/" + PlayerUtils.converLongTimeToStr(amin)));
         //延时：避免出现上一个视频的画面闪屏
         myHandler.postDelayed(new Runnable() {
             @Override

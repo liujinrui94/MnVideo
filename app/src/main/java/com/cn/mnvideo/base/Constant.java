@@ -14,9 +14,11 @@ public class Constant {
 
     public static final String RESPONSE_SUCCESS = "0000";
 
-    public static final String TUIGUANGMA = "4b45eeef1ce74ab89b0b3634cf2afb92";
+    public static String TUIGUANGMA = "4b45eeef1ce74ab89b0b3634cf2afb92";
 
-    public static final String IP = "http://222.186.173.169:8080";
+    public static final String INMAGE_IP = "http://v.tanghuojidi.com/";
+    public static final String IP = "http://www.daydayhabit.com/";
+
 
     public static final String VIDEO_RUL = "/videoPic/api/getVideoPics";
 
