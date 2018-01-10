@@ -88,7 +88,7 @@ public class MineFragment extends BaseFragment {
         tv_account.setText(AppApplication.getInstance().getBaseUserInfo().getId());
         tv_password.setText(AppApplication.getInstance().getBaseUserInfo().getPassword());
 
-        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() == 5) {
+        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() ==7) {
             upgrade_tv.setVisibility(View.GONE);
         }
 

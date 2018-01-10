@@ -52,6 +52,8 @@ public class FirstMemberFragment extends BaseFragment {
 
     private int pageNum = 1;
 
+    private String type;
+
     private ArrayList<Mnvideo> mnVideoArrayList = new ArrayList<>();
 
     public static FirstMemberFragment newInstance(String title) {
@@ -74,11 +76,18 @@ public class FirstMemberFragment extends BaseFragment {
         recyclerView = rootView.findViewById(R.id.fragment_rlv);
         smartRefreshLayout = rootView.findViewById(R.id.fragment_smartRefreshLayout);
 
+        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel()>5){
+            type=AppApplication.getInstance().getBaseUserInfo().getMemberlevel()*10+"";
+        }else {
+            type=AppApplication.getInstance().getBaseUserInfo().getMemberlevel()+"";
+        }
+
+
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageNum = 1;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
 
@@ -86,7 +95,7 @@ public class FirstMemberFragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageNum++;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
 

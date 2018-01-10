@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -43,7 +44,11 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
             "chong/4j.jpg",
             "chong/5j.jpg",
             "chong/6j.jpg",
+            "chong/7j.jpg",
             "chong/7j.jpg"};
+
+    private long[] money={39,20,28,25,20,22,66};
+
 
 
     //可以看到两个构造器，想自定义样式的就用第二个啦
@@ -99,12 +104,36 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         rbtn2 = (RadioButton) groupBroadcast.getChildAt(1);
         rbtn3 = (RadioButton) groupBroadcast.getChildAt(2);
 
-        rbtn1.setText((22 - AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 2) + "");
-        rbtn2.setText((39 - AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 2) + "");
-        rbtn3.setText((72 - AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 2) + "");
+        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel()>0){
+            rbtn1.setVisibility(View.VISIBLE);
+            rbtn2.setVisibility(View.GONE);
+            rbtn3.setVisibility(View.GONE);
+        }else {
+            rbtn1.setVisibility(View.GONE);
+            rbtn2.setVisibility(View.VISIBLE);
+            rbtn3.setVisibility(View.VISIBLE);
+        }
+        rbtn1.setText(Html.fromHtml("<font>全站观看</font>    <font color='red'>           ￥"+money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]+"元</font>" ));
+        rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥39元</font>" ));
+        rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥72元</font>"  ));
         rbtn2.performClick();
-        mPayInfo.setMoney(Long.parseLong(rbtn2.getText().toString()));
-        groupBroadcast.setOnCheckedChangeListener(listener);
+        mPayInfo.setMoney(money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]);
+        rbtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayInfo.setMoney(39l);
+            }
+        });
+
+        rbtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayInfo.setMoney(72l);
+            }
+        });
+
+
+//        groupBroadcast.setOnCheckedChangeListener(listener);
         //设置dialog大小，这里是一个小赠送，模块好的控件大小设置
         Window dialogWindow = getWindow();
         WindowManager manager = ((Activity) context).getWindowManager();
@@ -116,15 +145,15 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
 
     }
 
-    //监听接口
-    private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-
-            mPayInfo.setMoney(Long.parseLong(radioButton.getText().toString()));
-        }
-    };
+//    //监听接口
+//    private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
+//        @Override
+//        public void onCheckedChanged(RadioGroup group, int checkedId) {
+//            RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+//
+//            mPayInfo.setMoney(Long.parseLong(radioButton.getText().toString()));
+//        }
+//    };
 
     @Override
     public void onClick(View view) {

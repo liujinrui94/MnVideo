@@ -58,9 +58,11 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface, N
             R.drawable.tab_selsected_baijin_rb,
             R.drawable.tab_select_bojin_rb,
             R.drawable.tab_select_chaoji_rb,
+            R.drawable.tab_select_bojin_rb,
+            R.drawable.tab_select_chaoji_rb,
             R.drawable.tab_select_bojin_rb};
 
-    private String[] strings = { "钻石会员", "黑金会员", "紫钻会员", "蓝钻会员", "皇冠会员","蓝钻会员"
+    private String[] strings = { "钻石会员", "黑金会员", "紫钻会员", "蓝钻会员", "皇冠会员","蓝钻会员","皇冠会员","蓝钻会员",
     };
     private RadioButtonDialog commonDialog;
 
@@ -78,7 +80,8 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface, N
     private void initView() {
         if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() == 0) {
             list.add(new ExperienceFragment());
-        } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() <= 5) {
+        } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() <= 7) {
+
             list.add(new FirstMemberFragment());
             Drawable rightDrawable = getResources().getDrawable(drawback[AppApplication.getInstance().getBaseUserInfo().getMemberlevel() - 1]);
             RadioButton mrb1 = findViewById(radioGroup.getChildAt(0).getId());

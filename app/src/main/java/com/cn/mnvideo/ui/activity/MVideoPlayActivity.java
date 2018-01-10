@@ -119,6 +119,7 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
     @BindView(R.id.edit_ll)
     LinearLayout edit_ll;
     List<PingLunInfo> list = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,9 +155,9 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
             mnViderPlayer.setCanSpeed(true);
         }
 
-        if (null != getIntent().getStringExtra("bofang") && AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 5){
-            mnViderPlayer.setBoFang(false);
-        }
+//        if (null != getIntent().getStringExtra("bofang") && AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 5) {
+//            mnViderPlayer.setBoFang(false);
+//        }
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -187,7 +188,7 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
                 }
                 code = 1;
 //                new BaseNetRetRequestPresenter(MVideoPlayActivity.this).GetNetRetRequest();
-                PingLunInfo pingLunInfo=new PingLunInfo();
+                PingLunInfo pingLunInfo = new PingLunInfo();
                 pingLunInfo.setContent(editText.getText().toString());
                 pingLunInfo.setCreateTime("一分钟前");
                 pingLunInfo.setHeadImg(AppApplication.getInstance().getBaseUserInfo().getHeadImg());
@@ -205,16 +206,15 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         int mCurrentOrientation = getResources().getConfiguration().orientation;
-        if ( mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT ) {
+        if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
             edit_ll.setVisibility(View.VISIBLE);
-        } else if ( mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE ) {
+        } else if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             edit_ll.setVisibility(View.GONE);
 
         }
 
     }
-
 
 
     private void initRlv(List<PingLunInfo> mlunInfoList) {
@@ -251,9 +251,9 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
         mnViderPlayer.setOnCompletionListener(new MNViderPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-
-                new RadioButtonDialog(getContext()).show();
-
+                if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 7) {
+                    new RadioButtonDialog(getContext()).show();
+                }
             }
         });
 
@@ -316,7 +316,8 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
     @Override
     public void showCordError(String msg, int sign) {
         if (smartRefreshLayout.isRefreshing()) {
-            smartRefreshLayout.finishRefresh();}
+            smartRefreshLayout.finishRefresh();
+        }
         ToastUtils.getInstance().showLongToast(msg);
     }
 

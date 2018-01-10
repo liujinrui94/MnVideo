@@ -74,8 +74,10 @@ public class ShikanRragment extends BaseFragment {
 
         if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 5) {
             type = AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + 1;
+        } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() > 5) {
+            type = AppApplication.getInstance().getBaseUserInfo().getMemberlevel() * 10;
         } else {
-            type = AppApplication.getInstance().getBaseUserInfo().getMemberlevel() - 1;
+            type = AppApplication.getInstance().getBaseUserInfo().getMemberlevel();
         }
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -116,7 +118,6 @@ public class ShikanRragment extends BaseFragment {
                         mIntent.putExtra("videoUrl", model.getWaibuUrl());
                         mIntent.putExtra("videotId", model.getId());
                         mIntent.putExtra("shikan", "1");
-                        mIntent.putExtra("bofang", "1");
                         mIntent.putExtra("fileUrlXq", model.getFileUrlXq());
                         mIntent.putExtra("fileUrlJt1", model.getFileUrlJt1());
                         mIntent.putExtra("fileUrlJt2", model.getFileUrlJt2());

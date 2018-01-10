@@ -62,6 +62,8 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     static final Handler myHandler = new Handler(Looper.getMainLooper()) {
     };
+
+
     // SurfaceView的创建比较耗时，要注意
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
@@ -125,6 +127,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 
     private RadioButtonDialog backCommonDialog;
     private int amin;
+
     public MNViderPlayer(Context context) {
         this(context, null);
     }
@@ -142,10 +145,10 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         //其他
         init();
 
-        int max=70;
-        int min=36;
+        int max = 70;
+        int min = 36;
         Random random = new Random();
-        amin=random.nextInt(max)%min+min;
+        amin = random.nextInt(max) % min + min;
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -335,11 +338,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (!BoFang) {
-            showD();
-            return;
-        }
-
         if (i == R.id.mn_iv_play_pause) {
             if (mediaPlayer != null) {
                 if (mediaPlayer.isPlaying()) {
@@ -448,8 +446,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     //--------------------------------------------------------------------------------------
 
     private void initTimeTask() {
-
-
         timer_video_time = new Timer();
         task_video_timer = new TimerTask() {
             @Override
@@ -462,13 +458,8 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
                         }
                         //设置时间
 //                        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + " / " + PlayerUtils.converLongTimeToStr(mediaPlayer.getDuration())));
-                        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + " / " + PlayerUtils.converLongTimeToStr(amin*100000)));
-                        if (!canSpeed) {
-                            if (mediaPlayer.getCurrentPosition()>8){
-                                stopVideo();
-                                showD();
-                            }
-                        }
+                        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + " / " + PlayerUtils.converLongTimeToStr(amin * 100000)));
+
                         //进度条
                         int progress = mediaPlayer.getCurrentPosition();
                         mn_seekBar.setProgress(progress);
@@ -586,12 +577,41 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
                     mediaPlayer.setDataSource(videoPath);
                     // 准备开始,异步准备，自动在子线程中
                     mediaPlayer.prepareAsync();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
         isFirstPlay = true;
+        if (!canSpeed) {
+
+
+            myHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    stopVideo();
+                    showD();
+                }
+            }, 10796);
+
+        } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() == 5) {
+            myHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    stopVideo();
+                    showD();
+                }
+            }, 17796);
+        } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() == 6) {
+            myHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    KaDunVideo();
+                    myHandler.postDelayed(this, 10000);
+                }
+            }, 796);
+        }
     }
 
     @Override
@@ -643,7 +663,6 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
     public void onPrepared(final MediaPlayer mediaPlayer) {
 
         mediaPlayer.start(); // 开始播放
-
         //是否开始播放
         if (!isPlaying) {
             mediaPlayer.pause();
@@ -656,7 +675,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
 //        mn_seekBar.setMax(mediaPlayer.getDuration());
 //        mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + "/" + PlayerUtils.converLongTimeToStr(mediaPlayer.getDuration())));
 
-        mn_seekBar.setMax(mediaPlayer.getDuration()*10);
+        mn_seekBar.setMax(mediaPlayer.getDuration() * 10);
         mn_tv_time.setText(String.valueOf(PlayerUtils.converLongTimeToStr(mediaPlayer.getCurrentPosition()) + "/" + PlayerUtils.converLongTimeToStr(amin)));
         //延时：避免出现上一个视频的画面闪屏
         myHandler.postDelayed(new Runnable() {
@@ -920,6 +939,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
+
     @Override
     public void onLongPress(MotionEvent e) {
     }
@@ -1071,6 +1091,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+
     /**
      * 暂停视频
      */
@@ -1082,6 +1103,29 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
             isPlaying = false;
         }
     }
+
+    //卡顿
+    public void KaDunVideo() {
+
+        java.util.Random random = new java.util.Random();// 定义随机类
+        int result = random.nextInt(2000);
+        mediaPlayer.pause();
+        mn_iv_play_pause.setVisibility(GONE);
+        video_position = mediaPlayer.getCurrentPosition();
+        isPlaying = false;
+        if (mediaPlayer != null) {
+
+            myHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startVideo();
+                }
+            }, 2000 + result);
+
+
+        }
+    }
+
 
     public void stopVideo() {
         if (mediaPlayer != null) {
