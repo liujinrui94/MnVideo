@@ -17,6 +17,7 @@ import com.cn.mnvideo.bean.Login;
 import com.cn.mnvideo.bean.UserInfo;
 import com.cn.mnvideo.network.BaseNetRetRequestPresenter;
 import com.cn.mnvideo.network.NetRequestView;
+import com.cn.mnvideo.utils.AppLogger;
 import com.cn.mnvideo.utils.GsonUtil;
 import com.cn.mnvideo.utils.ToastUtils;
 
@@ -65,18 +66,20 @@ public class SplashActivity extends BaseActivity implements NetRequestView {
     public String getPostJsonString() {
         Login login = new Login();
         login.setUserId(JPushInterface.getRegistrationID(this));
+        login.setName(JPushInterface.getRegistrationID(this));
         login.setTuiguangma(Constant.TUIGUANGMA);
         return Constant.IP + Constant.LOGIN + GsonUtil.BeanToencode(login);
     }
 
     @Override
     public void NetInfoResponse(String data, int sign) {
+        AppLogger.e(data);
+        UserInfo userInfo = GsonUtil.getInstance().fromJson(data, UserInfo.class);
+        AppLogger.e(userInfo.toString());
+//        if (System.currentTimeMillis() > stringToLong(userInfo.getEndTime(), "yyyy-MM-dd HH:mm:ss")) {
+//            userInfo.setMemberlevel(0);
+//        }
 
-        UserInfo userInfo=GsonUtil.getInstance().fromJson(data, UserInfo.class);
-
-        if (System.currentTimeMillis()>stringToLong(userInfo.getEndTime(), "yyyy-MM-dd HH:mm:ss")){
-            userInfo.setMemberlevel(0);
-        }
         AppApplication.getInstance().setBaseUserInfo(userInfo);
         startActivity(new Intent(this, TabMainActivity.class));
         finish();
@@ -88,29 +91,28 @@ public class SplashActivity extends BaseActivity implements NetRequestView {
     }
 
 
-
-    public static long stringToLong(String strTime, String formatType)
-             {
-                 Date date = null; // String类型转成date类型
-                 date = stringToDate(strTime, formatType);
-                 if (date == null) {
+    public static long stringToLong(String strTime, String formatType) {
+        Date date = null; // String类型转成date类型
+        date = stringToDate(strTime, formatType);
+        if (date == null) {
             return 0;
         } else {
             long currentTime = dateToLong(date); // date类型转成long类型
             return currentTime;
         }
     }
-    public static Date stringToDate(String strTime, String formatType)
-             {
+
+    public static Date stringToDate(String strTime, String formatType) {
         SimpleDateFormat formatter = new SimpleDateFormat(formatType);
         Date date = null;
-                 try {
-                     date = formatter.parse(strTime);
-                 } catch (java.text.ParseException e) {
-                     e.printStackTrace();
-                 }
-                 return date;
+        try {
+            date = formatter.parse(strTime);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
+
     public static long dateToLong(Date date) {
         return date.getTime();
     }

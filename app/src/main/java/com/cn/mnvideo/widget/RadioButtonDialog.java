@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.bumptech.glide.Glide;
 import com.cn.mnvideo.R;
 import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.Constant;
@@ -47,8 +48,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
             "chong/7j.jpg",
             "chong/7j.jpg"};
 
-    private long[] money={39,20,28,25,20,22,66};
-
+    private long[] money = {39, 20, 28, 25, 20, 22, 66};
 
 
     //可以看到两个构造器，想自定义样式的就用第二个啦
@@ -92,9 +92,17 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_common, null);
         setContentView(view);
         imageView = view.findViewById(R.id.common_dialog_iv);
-
-        GlideUtils.getInstance().loadNetImage(Constant.INMAGE_IP+url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()], imageView);
-
+        Window dialogWindow = getWindow();
+        WindowManager manager = ((Activity) context).getWindowManager();
+        WindowManager.LayoutParams params = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        dialogWindow.setGravity(Gravity.CENTER);//设置对话框位置
+        Display d = manager.getDefaultDisplay(); // 获取屏幕宽、高度
+        params.width = (int) (d.getWidth() * 0.8); // 宽度设置为屏幕的0.65，根据实际情况调整
+        dialogWindow.setAttributes(params);
+        Glide.with(context)
+                .load(Constant.INMAGE_IP + url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()])
+                .override(params.width, 200) // resizes the image to these dimensions (in pixel). does not respect aspect ratio
+                .into(imageView);
         view.findViewById(R.id.wx_pay_btn).setOnClickListener(this);
         view.findViewById(R.id.albb_pay_btn).setOnClickListener(this);
         view.findViewById(R.id.wx_sm_pay_btn).setOnClickListener(this);
@@ -104,45 +112,35 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         rbtn2 = (RadioButton) groupBroadcast.getChildAt(1);
         rbtn3 = (RadioButton) groupBroadcast.getChildAt(2);
 
-        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel()>0){
+        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() > 0) {
             rbtn1.setVisibility(View.VISIBLE);
             rbtn2.setVisibility(View.GONE);
             rbtn3.setVisibility(View.GONE);
-        }else {
+        } else {
             rbtn1.setVisibility(View.GONE);
             rbtn2.setVisibility(View.VISIBLE);
             rbtn3.setVisibility(View.VISIBLE);
         }
-        rbtn1.setText(Html.fromHtml("<font>全站观看</font>    <font color='red'>           ￥"+money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]+"元</font>" ));
-        rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥39元</font>" ));
-        rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥72元</font>"  ));
+        rbtn1.setText(Html.fromHtml("<font>全站观看</font>    <font color='red'>           ￥" + money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()] + "元</font>"));
+        rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getScbn() + "元</font>"));
+        rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包年观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getScby() + "元</font>"));
         rbtn2.performClick();
         mPayInfo.setMoney(money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]);
         rbtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPayInfo.setMoney(39l);
+                mPayInfo.setMoney(AppApplication.getInstance().getBaseUserInfo().getScbn());
             }
         });
 
         rbtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPayInfo.setMoney(72l);
+                mPayInfo.setMoney(AppApplication.getInstance().getBaseUserInfo().getScby());
             }
         });
-
-
 //        groupBroadcast.setOnCheckedChangeListener(listener);
         //设置dialog大小，这里是一个小赠送，模块好的控件大小设置
-        Window dialogWindow = getWindow();
-        WindowManager manager = ((Activity) context).getWindowManager();
-        WindowManager.LayoutParams params = dialogWindow.getAttributes(); // 获取对话框当前的参数值
-        dialogWindow.setGravity(Gravity.CENTER);//设置对话框位置
-        Display d = manager.getDefaultDisplay(); // 获取屏幕宽、高度
-        params.width = (int) (d.getWidth() * 0.8); // 宽度设置为屏幕的0.65，根据实际情况调整
-        dialogWindow.setAttributes(params);
-
     }
 
 //    //监听接口
@@ -163,8 +161,8 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
         mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
         if (null == mPayInfo.getMoney()) {
-           ToastUtils.getInstance().showShortToast("套餐不能为空");
-           return;
+            ToastUtils.getInstance().showShortToast("套餐不能为空");
+            return;
         }
         switch (view.getId()) {
             case R.id.wx_pay_btn:

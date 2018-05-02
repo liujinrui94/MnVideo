@@ -53,14 +53,15 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface, N
     private List<Fragment> list = new ArrayList<>();
 
     private int[] drawback = {
-            R.drawable.tab_selected_home_rb,
             R.drawable.tab_selected_member_rb,
             R.drawable.tab_selsected_baijin_rb,
             R.drawable.tab_select_bojin_rb,
             R.drawable.tab_select_chaoji_rb,
             R.drawable.tab_select_bojin_rb,
             R.drawable.tab_select_chaoji_rb,
-            R.drawable.tab_select_bojin_rb};
+            R.drawable.tab_select_bojin_rb,
+            R.drawable.tab_select_chaoji_rb,};
+
 
     private String[] strings = { "钻石会员", "黑金会员", "紫钻会员", "蓝钻会员", "皇冠会员","蓝钻会员","皇冠会员","蓝钻会员",
     };
@@ -134,11 +135,11 @@ public class TabMainActivity extends BaseActivity implements UpgradeInterface, N
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK && AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 1) {
-            backCommonDialog.show();
-        } else {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && AppApplication.getInstance().getBaseUserInfo().getMemberlevel() < 1) {
+//            backCommonDialog.show();
+//        } else {
             exitBy2Click();
-        }
+//        }
         return false;
     }
 

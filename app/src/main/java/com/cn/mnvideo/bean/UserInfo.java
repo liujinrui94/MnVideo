@@ -17,6 +17,24 @@ public class UserInfo extends BaseResponseParams {
 
     private String endTime;
 
+    private long scbn;
+    private long scby;
+
+    public long getScbn() {
+        return scbn;
+    }
+
+    public void setScbn(long scbn) {
+        this.scbn = scbn;
+    }
+
+    public long getScby() {
+        return scby;
+    }
+
+    public void setScby(long scby) {
+        this.scby = scby;
+    }
 
     public String getEndTime() {
         return endTime;

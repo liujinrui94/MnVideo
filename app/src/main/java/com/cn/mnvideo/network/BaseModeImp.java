@@ -1,17 +1,8 @@
 package com.cn.mnvideo.network;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.Constant;
-import com.cn.mnvideo.bean.BaseResponseParams;
 import com.cn.mnvideo.mode.BaseNetRequestModel;
 import com.cn.mnvideo.utils.AppLogger;
-import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -27,8 +18,8 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
         @Override
         public void postBaseNetRequestModel(String requestString, final BaseNetRequestCallBack callBack) {
-            AppLogger.d(requestString);
-            OkHttpUtils.post().url( requestString).build().execute(new StringCallback() {
+            AppLogger.e(requestString);
+            OkHttpUtils.get().url( requestString).build().execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     callBack.OnNetError();
@@ -36,7 +27,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
                 @Override
                 public void onResponse(String response, int id) {
-                    AppLogger.d(response);
+                    AppLogger.e(response);
                     JSONObject jsonObject = null;
                     JSONObject data=null;
                     try {
@@ -44,6 +35,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
                         data = jsonObject.optJSONObject("info");
                         if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
                             if (null!=data){
+                                AppLogger.e(data.toString());
                                 callBack.SucceedCallBack(data.toString());
                             }else {
                                 callBack.SucceedCallBack("");
@@ -76,7 +68,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
                         jsonObject = new JSONObject(response);
                         data = jsonObject.optJSONObject("info");
                         if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
-                            callBack.SucceedCallBack(data.toString());
+                            callBack.SucceedCallBack(response);
                         } else {
                             callBack.CodeError(jsonObject.getString("responseMsg"));
                         }

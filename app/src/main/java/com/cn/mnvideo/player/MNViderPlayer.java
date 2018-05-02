@@ -585,15 +585,14 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         }
         isFirstPlay = true;
         if (!canSpeed) {
-
-
+            Log.e("AAA", "aaaaaaaaaaa1");
             myHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     stopVideo();
                     showD();
                 }
-            }, 10796);
+            }, 17796);
 
         } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() == 5) {
             myHandler.postDelayed(new Runnable() {
@@ -602,7 +601,7 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
                     stopVideo();
                     showD();
                 }
-            }, 17796);
+            }, 24000);
         } else if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() == 6) {
             myHandler.postDelayed(new Runnable() {
                 @Override
@@ -683,10 +682,8 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
             public void run() {
                 initBottomMenuState();
                 mn_player_rl_progress.setVisibility(View.GONE);
-
                 //跳转指定位置
                 if (video_position > 0) {
-                    Log.i(TAG, "onPrepared---video_position:" + video_position);
                     MNViderPlayer.this.mediaPlayer.seekTo(video_position);
                     video_position = 0;
                 }
@@ -1114,15 +1111,12 @@ public class MNViderPlayer extends FrameLayout implements View.OnClickListener, 
         video_position = mediaPlayer.getCurrentPosition();
         isPlaying = false;
         if (mediaPlayer != null) {
-
             myHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     startVideo();
                 }
             }, 2000 + result);
-
-
         }
     }
 

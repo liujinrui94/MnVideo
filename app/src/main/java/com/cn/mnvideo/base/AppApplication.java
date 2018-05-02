@@ -2,7 +2,6 @@ package com.cn.mnvideo.base;
 
 import android.app.Application;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.cn.mnvideo.bean.UserInfo;
 import com.cn.mnvideo.network.NetRequestView;

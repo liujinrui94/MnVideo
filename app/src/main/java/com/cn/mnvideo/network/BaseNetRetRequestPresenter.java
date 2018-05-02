@@ -46,7 +46,7 @@ public class BaseNetRetRequestPresenter {
         });
     }
     public void GetNetRetRequest() {
-        baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
+        baseModeImp.getBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
             @Override
             public void SucceedCallBack(String data) {
                 try {

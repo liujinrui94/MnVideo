@@ -69,8 +69,10 @@ public class ExperienceFragment extends BaseFragment {
     private BaseRecyclerAdapter mBaseRecyclerAdapter;
 
     private List<Mnvideo> gungGaoList;
-    private InfoBean mInfoBean;
+//    private InfoBean mInfoBean;
     private int pageNum = 1;
+
+    private ArrayList<Mnvideo> list;
 
     private ArrayList<Mnvideo> mnVideoArrayList = new ArrayList<>();
 
@@ -99,10 +101,18 @@ public class ExperienceFragment extends BaseFragment {
             public void onResponse(String response, int id) {
                 JSONObject jsonObject = null;
                 String data = null;
+                String scby=null;
+                String scbn=null;
                 try {
                     jsonObject = new JSONObject(response);
                     data = jsonObject.getString("guanggao");
+                    scby=jsonObject.getString("scby");
+                    scbn=jsonObject.getString("scbn");
                     if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
+
+                        AppApplication.getInstance().getBaseUserInfo().setScbn(Long.parseLong(scby));
+                        AppApplication.getInstance().getBaseUserInfo().setScby(Long.parseLong(scbn));
+
                         if (null != data) {
                             gungGaoList =GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
                                     }.getType());
@@ -210,30 +220,32 @@ public class ExperienceFragment extends BaseFragment {
 
     @Override
     public void NetInfoResponse(String data, int sign) {
+        AppLogger.e(data);
         progressCancel();
         switch (sign) {
             case 0:
-                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
-
+//                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
+                list=GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
+                }.getType());
                 if (smartRefreshLayout.isRefreshing() && mBaseRecyclerAdapter != null) {
-                    mBaseRecyclerAdapter.refresh(mInfoBean.getRecords());
+                    mBaseRecyclerAdapter.refresh(list);
                     smartRefreshLayout.finishRefresh();
 
                 } else if (smartRefreshLayout.isLoading()) {
-                    mBaseRecyclerAdapter.loadmore(mInfoBean.getRecords());
+                    mBaseRecyclerAdapter.loadmore(list);
                     smartRefreshLayout.finishLoadmore();
                 } else {
                     if (mBaseRecyclerAdapter == null) {
-                        initNetView(mInfoBean.getRecords());
+                        initNetView(list);
                         smartRefreshLayout.finishRefresh();
 
                     } else {
-                        mnVideoArrayList.addAll(mInfoBean.getRecords());
+                        mnVideoArrayList.addAll(list);
                         initNetView(mnVideoArrayList);
                     }
 
                 }
-                if (mInfoBean.getRecords().size() < 20) {
+                if (list.size() < 20) {
                     smartRefreshLayout.setLoadmoreFinished(true);
                 }
                 break;
