@@ -19,6 +19,7 @@ import com.cn.mnvideo.base.BaseFragment;
 import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.InfoBean;
 import com.cn.mnvideo.bean.Mnvideo;
+import com.cn.mnvideo.bean.MnvideoModel;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
 import com.cn.mnvideo.utils.GlideUtils;
 import com.cn.mnvideo.utils.GsonUtil;
@@ -84,7 +85,7 @@ public class ShikanRragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageNum = 0;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + type + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
 
@@ -92,7 +93,7 @@ public class ShikanRragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageNum++;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + type + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
 
@@ -139,27 +140,27 @@ public class ShikanRragment extends BaseFragment {
         progressCancel();
         switch (sign) {
             case 0:
-                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
-
+//                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
+                MnvideoModel mnvideoModel=GsonUtil.getInstance().fromJson(data,MnvideoModel.class);
                 if (smartRefreshLayout.isRefreshing() && mBaseRecyclerAdapter != null) {
-                    mBaseRecyclerAdapter.refresh(mInfoBean.getRecords());
+                    mBaseRecyclerAdapter.refresh(mnvideoModel.getMnvideoList());
                     smartRefreshLayout.finishRefresh();
 
                 } else if (smartRefreshLayout.isLoading()) {
-                    mBaseRecyclerAdapter.loadmore(mInfoBean.getRecords());
+                    mBaseRecyclerAdapter.loadmore(mnvideoModel.getMnvideoList());
                     smartRefreshLayout.finishLoadmore();
                 } else {
                     if (mBaseRecyclerAdapter == null) {
-                        initNetView(mInfoBean.getRecords());
+                        initNetView(mnvideoModel.getMnvideoList());
                         smartRefreshLayout.finishRefresh();
 
                     } else {
-                        mnVideoArrayList.addAll(mInfoBean.getRecords());
+                        mnVideoArrayList.addAll(mnvideoModel.getMnvideoList());
                         initNetView(mnVideoArrayList);
                     }
 
                 }
-                if (mInfoBean.getRecords().size() < 20) {
+                if (mnvideoModel.getMnvideoList().size() < 20) {
                     smartRefreshLayout.setLoadmoreFinished(true);
                 }
                 break;

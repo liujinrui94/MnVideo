@@ -162,6 +162,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/selector_button_theme_8"
             android:padding="5dp"
+            android:textColor="@color/whiteTextColor"
             android:text="发送" />
 
     </LinearLayout>

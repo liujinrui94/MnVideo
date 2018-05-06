@@ -1,8 +1,12 @@
 package com.cn.mnvideo.network;
 
+import android.util.Log;
+
 import com.cn.mnvideo.base.Constant;
+import com.cn.mnvideo.bean.BaseResponseParams;
 import com.cn.mnvideo.mode.BaseNetRequestModel;
 import com.cn.mnvideo.utils.AppLogger;
+import com.cn.mnvideo.utils.GsonUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -19,7 +23,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
         @Override
         public void postBaseNetRequestModel(String requestString, final BaseNetRequestCallBack callBack) {
             AppLogger.e(requestString);
-            OkHttpUtils.get().url( requestString).build().execute(new StringCallback() {
+            OkHttpUtils.post().url( requestString).build().execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     callBack.OnNetError();
@@ -27,24 +31,15 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
                 @Override
                 public void onResponse(String response, int id) {
-                    AppLogger.e(response);
-                    JSONObject jsonObject = null;
-                    JSONObject data=null;
-                    try {
-                        jsonObject = new JSONObject(response);
-                        data = jsonObject.optJSONObject("info");
-                        if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
-                            if (null!=data){
-                                AppLogger.e(data.toString());
-                                callBack.SucceedCallBack(data.toString());
-                            }else {
-                                callBack.SucceedCallBack("");
-                            }
-                        } else {
-                            callBack.CodeError(jsonObject.getString("responseMsg"));
+                    BaseResponseParams baseResponseParams= GsonUtil.getInstance().fromJson(response,BaseResponseParams.class);
+                    if (baseResponseParams.getResponseCode().equals(Constant.RESPONSE_SUCCESS)){
+                        if (null!=baseResponseParams.getInfo()){
+                            callBack.SucceedCallBack(response);
+                        }else {
+                            callBack.SucceedCallBack("");
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    }else {
+                        callBack.CodeError(baseResponseParams.getResponseMsg());
                     }
                 }
             });
@@ -53,6 +48,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
         @Override
         public void getBaseNetRequestModel(String requestString, final BaseNetRequestCallBack callBack) {
+            AppLogger.e(requestString);
             OkHttpUtils.get().url(requestString).build().execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
@@ -61,7 +57,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
                 @Override
                 public void onResponse(String response, int id) {
-                    AppLogger.d(response);
+                    AppLogger.e(response);
                     JSONObject jsonObject = null;
                     JSONObject data=null;
                     try {

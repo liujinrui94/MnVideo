@@ -87,7 +87,7 @@ public class FirstMemberFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageNum = 1;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + type + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
 
@@ -95,7 +95,7 @@ public class FirstMemberFragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageNum++;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + type + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
 

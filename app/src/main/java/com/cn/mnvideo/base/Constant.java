@@ -26,7 +26,7 @@ public class Constant {
 //    public static final String PAY = IP + "/pay/json/pay?";
 
     public static final String IP = "http://119.29.180.63:86";
-    public static final String VIDEO_RUL = "/Apps/GetrandMv";
+    public static final String VIDEO_RUL = "/Apps/GetrandMv?";
     public static final String LOGIN = "/Apps/add_user?";
     public static final String PINGLUN = IP + "/Apps/getUserCommentList?";
     public static final String RECHARGE = IP + "/user/api/recharge?";

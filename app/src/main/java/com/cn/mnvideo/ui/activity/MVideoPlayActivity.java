@@ -35,6 +35,7 @@ import com.cn.mnvideo.base.BaseActivity;
 import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.Mnvideo;
 import com.cn.mnvideo.bean.PingLunInfo;
+import com.cn.mnvideo.bean.PingLunInfoMode;
 import com.cn.mnvideo.network.BaseNetRetRequestPresenter;
 import com.cn.mnvideo.network.NetRequestView;
 import com.cn.mnvideo.player.MNViderPlayer;
@@ -196,6 +197,8 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
                 ic_nocomment.setVisibility(View.GONE);
                 list.add(pingLunInfo);
                 baseRecyclerAdapter.refresh(list);
+                editText.setText("");
+                ToastUtils.getInstance().showShortToast("评论成功");
 
             }
         });
@@ -335,16 +338,14 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
 
     @Override
     public void NetInfoResponse(String data, int sign) {
-
         if (sign == 0) {
-
             JSONObject jsonObject = null;
 
             try {
                 jsonObject = new JSONObject(data);
-                String data1 = jsonObject.getString("records");
-                list = GsonUtil.getInstance().fromJson(data1, new TypeToken<List<PingLunInfo>>() {
-                }.getType());
+                String data1 = jsonObject.getString("info");
+                PingLunInfoMode pingLunInfoMode=GsonUtil.getInstance().fromJson(data1,PingLunInfoMode.class);
+                list = pingLunInfoMode.getInfot();
 
 
             } catch (JSONException e) {

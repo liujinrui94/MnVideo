@@ -6,11 +6,21 @@ package com.cn.mnvideo.bean;
  * @time: 2017/12/7 17:23
  * @description:
  */
-public class BaseResponseParams {
+public class BaseResponseParams<T> {
 
     private String responseCode;
     private String responseMsg;
 
+    private T info;
+
+
+    public T getInfo() {
+        return info;
+    }
+
+    public void setInfo(T info) {
+        this.info = info;
+    }
 
     public String getResponseCode() {
         return responseCode;
@@ -28,4 +38,12 @@ public class BaseResponseParams {
         this.responseMsg = responseMsg;
     }
 
+    @Override
+    public String toString() {
+        return "BaseResponseParams{" +
+                "responseCode='" + responseCode + '\'' +
+                ", responseMsg='" + responseMsg + '\'' +
+                ", info=" + info +
+                '}';
+    }
 }

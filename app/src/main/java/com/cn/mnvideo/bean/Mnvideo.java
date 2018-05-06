@@ -1,5 +1,7 @@
 package com.cn.mnvideo.bean;
 
+import java.util.List;
+
 /**
  * @author: LiuJinrui
  * @email: liujinrui@qdcftx.com
@@ -22,6 +24,7 @@ public class Mnvideo {
                 "waibuUrl": ""
     *
     * */
+
 
     private String content;
     private String type;

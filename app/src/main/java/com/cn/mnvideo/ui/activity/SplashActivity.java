@@ -75,7 +75,6 @@ public class SplashActivity extends BaseActivity implements NetRequestView {
     public void NetInfoResponse(String data, int sign) {
         AppLogger.e(data);
         UserInfo userInfo = GsonUtil.getInstance().fromJson(data, UserInfo.class);
-        AppLogger.e(userInfo.toString());
 //        if (System.currentTimeMillis() > stringToLong(userInfo.getEndTime(), "yyyy-MM-dd HH:mm:ss")) {
 //            userInfo.setMemberlevel(0);
 //        }

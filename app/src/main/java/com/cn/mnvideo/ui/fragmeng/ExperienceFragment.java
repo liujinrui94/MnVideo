@@ -22,6 +22,7 @@ import com.cn.mnvideo.bean.GungGao;
 import com.cn.mnvideo.bean.InfoBean;
 import com.cn.mnvideo.bean.Login;
 import com.cn.mnvideo.bean.Mnvideo;
+import com.cn.mnvideo.bean.MnvideoModel;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
 import com.cn.mnvideo.ui.activity.MainActivity;
 import com.cn.mnvideo.utils.AppLogger;
@@ -151,7 +152,7 @@ public class ExperienceFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageNum = 1;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "type=" + AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + "&pageNum=" + pageNum, 0);
             }
         });
 
@@ -159,7 +160,7 @@ public class ExperienceFragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageNum++;
-                getData(Constant.IP + Constant.VIDEO_RUL + "?type=" + AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + "&pageNum=" + pageNum, 0);
+                getData(Constant.IP + Constant.VIDEO_RUL + "type=" + AppApplication.getInstance().getBaseUserInfo().getMemberlevel() + "&pageNum=" + pageNum, 0);
             }
         });
 
@@ -220,13 +221,16 @@ public class ExperienceFragment extends BaseFragment {
 
     @Override
     public void NetInfoResponse(String data, int sign) {
-        AppLogger.e(data);
+        AppLogger.e("AAAAA"+data);
         progressCancel();
         switch (sign) {
             case 0:
 //                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
-                list=GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
-                }.getType());
+
+//                list=GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
+//                }.getType());
+                MnvideoModel mnvideoModel=GsonUtil.getInstance().fromJson(data,MnvideoModel.class);
+                list=  mnvideoModel.getMnvideoList();
                 if (smartRefreshLayout.isRefreshing() && mBaseRecyclerAdapter != null) {
                     mBaseRecyclerAdapter.refresh(list);
                     smartRefreshLayout.finishRefresh();
