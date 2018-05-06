@@ -11,7 +11,7 @@ import java.util.Stack;
 
 import cn.jpush.android.api.JPushInterface;
 
-public class AppApplication extends Application implements NetRequestView {
+public class AppApplication extends Application  {
 
     public static AppApplication instance;
 
@@ -88,23 +88,4 @@ public class AppApplication extends Application implements NetRequestView {
         }
     }
 
-    @Override
-    public void showCordError(String msg, int sign) {
-
-    }
-
-    @Override
-    public String getPostJsonString() {
-        return null;
-    }
-
-    @Override
-    public void NetInfoResponse(String data, int sign) {
-
-    }
-
-    @Override
-    public int sign() {
-        return 0;
-    }
 }

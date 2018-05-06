@@ -27,12 +27,12 @@ android {
         release {
             resValue("string", "TGM", "e5b782b581304bd7b9839f4a5758f566")
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            android.applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "e5b782b581304bd7b9839f4a5758f566.apk"
-                }
-            }
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            android.applicationVariants.all { variant ->
+//                variant.outputs.all {
+//                    outputFileName = "e5b782b581304bd7b9839f4a5758f566.apk"
+//                }
+//            }
         }
 
     }
@@ -55,5 +55,4 @@ dependencies {
     implementation 'com.android.support:cardview-v7:26+'
     //轮播图
     implementation 'com.jude:rollviewpager:1.4.6'
-    implementation 'com.facebook.react:react-native:0.13.0'
 }
