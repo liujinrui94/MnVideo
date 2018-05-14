@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MNViderPlayer";
 
+
+
     private final String url1 = "http://v.wxwwfx.org:8088/vip7/1.mp4";
     private final String url2 = "http://v.wxwwfx.org:8088/vip7/1.mp4";
     //这个地址是错误的
