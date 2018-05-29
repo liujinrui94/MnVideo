@@ -18,11 +18,13 @@ import com.cn.mnvideo.adapter.SmartViewHolder;
 import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.BaseFragment;
 import com.cn.mnvideo.base.Constant;
+import com.cn.mnvideo.bean.BaseResponseParams;
 import com.cn.mnvideo.bean.GungGao;
 import com.cn.mnvideo.bean.InfoBean;
 import com.cn.mnvideo.bean.Login;
 import com.cn.mnvideo.bean.Mnvideo;
 import com.cn.mnvideo.bean.MnvideoModel;
+import com.cn.mnvideo.bean.UserInfo;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
 import com.cn.mnvideo.ui.activity.MainActivity;
 import com.cn.mnvideo.utils.AppLogger;
@@ -91,7 +93,7 @@ public class ExperienceFragment extends BaseFragment {
         Login login = new Login();
         login.setUserId(JPushInterface.getRegistrationID(getContext()));
         login.setTuiguangma(Constant.TUIGUANGMA);
-        OkHttpUtils.post().url(Constant.IP + Constant.LOGIN + GsonUtil.BeanToencode(login)).build().execute(new StringCallback() {
+        OkHttpUtils.post().url("http://119.29.180.63:86/Apps/GetShuffling").build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -100,46 +102,52 @@ public class ExperienceFragment extends BaseFragment {
 
             @Override
             public void onResponse(String response, int id) {
-                JSONObject jsonObject = null;
-                String data = null;
-                String scby=null;
-                String scbn=null;
-                try {
-                    jsonObject = new JSONObject(response);
-                    data = jsonObject.getString("guanggao");
-                    scby=jsonObject.getString("scby");
-                    scbn=jsonObject.getString("scbn");
-                    if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
+                AppLogger.e("AAA0"+response);
+                BaseResponseParams<UserInfo> baseResponseParams=GsonUtil.getInstance().fromJson(response,BaseResponseParams.class);
+                AppLogger.e("AAA1"+baseResponseParams.toString());
 
-                        AppApplication.getInstance().getBaseUserInfo().setScbn(Long.parseLong(scby));
-                        AppApplication.getInstance().getBaseUserInfo().setScby(Long.parseLong(scbn));
-
-                        if (null != data) {
-                            gungGaoList =GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
-                                    }.getType());
-                            rollPagerView.setAdapter(new LoopPagerAdapter(rollPagerView) {
-                                @Override
-                                public View getView(ViewGroup container, int position) {
-                                    ImageView view = new ImageView(container.getContext());
-                                    GlideUtils.getInstance().loadNetImage(gungGaoList.get(position).getFileUrl(), view);
-                                    view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                    view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                                    return view;
-                                }
-
-                                @Override
-                                public int getRealCount() {
-                                    return gungGaoList.size();
-                                }
-                            });
-                        } else {
-                        }
-                    } else {
-                        ToastUtils.getInstance().showShortToast(jsonObject.getString("responseMsg"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                UserInfo userInfo=baseResponseParams.getInfo();
+                AppLogger.e("AAA2"+userInfo.toString());
+//                JSONObject jsonObject = null;
+//                String data = null;
+//                String scby=null;
+//                String scbn=null;
+//                try {
+//                    jsonObject = new JSONObject(response);
+//                    data = jsonObject.getString("guanggao");
+//                    scby=jsonObject.getString("scby");
+//                    scbn=jsonObject.getString("scbn");
+//                    if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
+//
+//                        AppApplication.getInstance().getBaseUserInfo().setScbn(Long.parseLong(scby));
+//                        AppApplication.getInstance().getBaseUserInfo().setScby(Long.parseLong(scbn));
+//
+//                        if (null != data) {
+//                            gungGaoList =GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
+//                                    }.getType());
+//                            rollPagerView.setAdapter(new LoopPagerAdapter(rollPagerView) {
+//                                @Override
+//                                public View getView(ViewGroup container, int position) {
+//                                    ImageView view = new ImageView(container.getContext());
+//                                    GlideUtils.getInstance().loadNetImage(gungGaoList.get(position).getFileUrl(), view);
+//                                    view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                                    view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//                                    return view;
+//                                }
+//
+//                                @Override
+//                                public int getRealCount() {
+//                                    return gungGaoList.size();
+//                                }
+//                            });
+//                        } else {
+//                        }
+//                    } else {
+//                        ToastUtils.getInstance().showShortToast(jsonObject.getString("responseMsg"));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 

@@ -6,7 +6,7 @@ package com.cn.mnvideo.bean;
  * @time: 2017/12/26 22:57
  * @description:
  */
-public class UserInfo extends BaseResponseParams {
+public class UserInfo  {
 
     private String name;
     private String password;
@@ -82,5 +82,20 @@ public class UserInfo extends BaseResponseParams {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", memberlevel=" + memberlevel +
+                ", headImg='" + headImg + '\'' +
+                ", id='" + id + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", scbn=" + scbn +
+                ", scby=" + scby +
+                '}';
     }
 }
