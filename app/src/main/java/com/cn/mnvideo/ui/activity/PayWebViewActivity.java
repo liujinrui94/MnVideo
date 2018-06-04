@@ -42,26 +42,30 @@ public class PayWebViewActivity extends BaseActivity implements NetRequestView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview_pay);
-        OkHttpUtils.post().url(getIntent().getStringExtra("json")).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                ToastUtils.getInstance().showLongToast(e.toString());
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                JSONObject data = null;
-                String url = null;
-                try {
-                    data = new JSONObject(response);
-                    url = data.getString("info");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                initView(url);
-            }
-        });
-
+//        Log.e("aaaa",);
+//        OkHttpUtils.post().url(getIntent().getStringExtra("json")).build().execute(new StringCallback() {
+//
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//                ToastUtils.getInstance().showLongToast(e.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(String response, int id) {
+//                JSONObject data = null;
+//                String url = null;
+//                try {
+//                    data = new JSONObject(response);
+//                    url = data.getString("info");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://weixin.bgeer.cn/platform/pay/unifiedorder/video?sign=731e5b8b2173ae3dcd7b182fe6e1c73e&mch_id=kexuidnfh156&body=vip&total_fee=100&spbill_create_ip=118.198.197.111&notify_url=http%3A%2F%2F119.29.180.63%3A86%2FApps%2Fnotify&redirect_url=http%3A%2F%2F119.29.180.63%3A86%2FApps%2Fsend%2Fid%2Fuserid84381&trade_type=WX&out_trade_no=userid84381"));
+//        startActivityForResult(intent,0);
+        initView(getIntent().getStringExtra("json"));
     }
 
 
