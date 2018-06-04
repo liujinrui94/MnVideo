@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.cn.mnvideo.R;
 import com.cn.mnvideo.base.AppApplication;
 import com.cn.mnvideo.base.Constant;
+import com.cn.mnvideo.bean.PayBean;
 import com.cn.mnvideo.bean.PayInfo;
 import com.cn.mnvideo.ui.activity.PayWebViewActivity;
 import com.cn.mnvideo.utils.GlideUtils;
@@ -34,7 +35,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
     private Context context;
     private String title;     //这里定义个title，一会可以看到是指向上面xml文件的控件title的，也就是我们可以通过这个进行动态修改title
     private AdapterView.OnItemClickListener onItemClickListener;      //这里定义了一个监听是为了实现内部的监听接口处理，从而实现代码分层管理
-    private PayInfo mPayInfo;
+    private PayBean mpayBean;
 
     private ImageView imageView;
 
@@ -48,7 +49,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
             "chong/7j.jpg",
             "chong/7j.jpg"};
 
-    private long[] money = {39, 20, 28, 25, 20, 22, 66};
+    private String[] money = {"39", "20", "28", "25", "20", "22", "66"};
 
 
     //可以看到两个构造器，想自定义样式的就用第二个啦
@@ -87,7 +88,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
     RadioButton rbtn1;
 
     private void init() {
-        mPayInfo = new PayInfo();
+        mpayBean = new PayBean();
         //以view的方式引入，然后回调activity方法，setContentView，实现自定义布局
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_common, null);
         setContentView(view);
@@ -125,18 +126,18 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getScbn() + "元</font>"));
         rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包年观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getScby() + "元</font>"));
         rbtn2.performClick();
-        mPayInfo.setMoney(money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]);
+        mpayBean.setMoney(money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]);
         rbtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPayInfo.setMoney(AppApplication.getInstance().getBaseUserInfo().getScbn());
+//                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getScbn());
             }
         });
 
         rbtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPayInfo.setMoney(AppApplication.getInstance().getBaseUserInfo().getScby());
+//                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getScby());
             }
         });
 //        groupBroadcast.setOnCheckedChangeListener(listener);
@@ -156,27 +157,28 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        mPayInfo.setTuiguangma(Constant.TUIGUANGMA);
-        mPayInfo.setUserId(AppApplication.getInstance().getBaseUserInfo().getId());
-        mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
-        mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
-        if (null == mPayInfo.getMoney()) {
+        mpayBean.setQudaoname(Constant.TUIGUANGMA);
+        mpayBean.setUserid(AppApplication.getInstance().getBaseUserInfo().getId());
+        mpayBean.setUserid("1");
+//        mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
+//        mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
+        if (null == mpayBean.getMoney()) {
             ToastUtils.getInstance().showShortToast("套餐不能为空");
             return;
         }
         switch (view.getId()) {
             case R.id.wx_pay_btn:
-                mPayInfo.setPayWay("WX");
+                mpayBean.setPaytype("1");
                 break;
             case R.id.albb_pay_btn:
-                mPayInfo.setPayWay("ALI");
+                mpayBean.setPaytype("2");
                 break;
             case R.id.wx_sm_pay_btn:
-                mPayInfo.setPayWay("WX_SCAN");
+//                mPayInfo.setPayWay("WX_SCAN");
                 break;
         }
         Intent intent = new Intent(getContext(), PayWebViewActivity.class);
-        intent.putExtra("json", Constant.PAY + GsonUtil.BeanToencode(mPayInfo));
+        intent.putExtra("json", Constant.PAY + GsonUtil.BeanToencode(mpayBean));
         getContext().startActivity(intent);
         dismiss();
     }

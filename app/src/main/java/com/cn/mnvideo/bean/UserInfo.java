@@ -8,17 +8,17 @@ package com.cn.mnvideo.bean;
  */
 public class UserInfo  {
 
-    private String name;
+    private String name;//用户名称
     private String password;
-    private int memberlevel;
-    private String headImg;
+    private int memberlevel;//当前等级
+    private String headImg;//头像地址
 
-    private String id;
+    private String id;//用户ID
 
-    private String endTime;
+    private String endTime;//会员到期时间
 
-    private long scbn;
-    private long scby;
+    private long scbn;//包年价格
+    private long scby;//包月价格
 
     public long getScbn() {
         return scbn;

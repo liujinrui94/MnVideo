@@ -22,8 +22,8 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
         @Override
         public void postBaseNetRequestModel(String requestString, final BaseNetRequestCallBack callBack) {
-            AppLogger.e(requestString);
-            OkHttpUtils.post().url( requestString).build().execute(new StringCallback() {
+            Log.e("Net—请求",requestString);
+            OkHttpUtils.get().url( requestString).build().execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     callBack.OnNetError();
@@ -31,6 +31,7 @@ public abstract class BaseModeImp implements BaseNetRequestModel {
 
                 @Override
                 public void onResponse(String response, int id) {
+                    Log.e("Net—返回",response);
                     BaseResponseParams baseResponseParams= GsonUtil.getInstance().fromJson(response,BaseResponseParams.class);
                     if (baseResponseParams.getResponseCode().equals(Constant.RESPONSE_SUCCESS)){
                         if (null!=baseResponseParams.getInfo()){

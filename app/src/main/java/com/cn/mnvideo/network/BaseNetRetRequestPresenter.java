@@ -1,6 +1,8 @@
 package com.cn.mnvideo.network;
 
 
+import android.util.Log;
+
 import com.cn.mnvideo.utils.AppLogger;
 
 import java.text.ParseException;
@@ -23,10 +25,14 @@ public class BaseNetRetRequestPresenter {
     }
 
     public void PostNetRetRequest() {
+
+
         baseModeImp.postBaseNetRequestModel(netRequestView.getPostJsonString(), new BaseNetRequestCallBack() {
             @Override
             public void SucceedCallBack(String data) {
+
                 try {
+
                     netRequestView.NetInfoResponse(data, netRequestView.sign());
                 } catch (ParseException e) {
                     e.printStackTrace();

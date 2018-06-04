@@ -72,10 +72,11 @@ public class ExperienceFragment extends BaseFragment {
     private BaseRecyclerAdapter mBaseRecyclerAdapter;
 
     private List<Mnvideo> gungGaoList;
-//    private InfoBean mInfoBean;
+    //    private InfoBean mInfoBean;
     private int pageNum = 1;
 
     private ArrayList<Mnvideo> list;
+
 
     private ArrayList<Mnvideo> mnVideoArrayList = new ArrayList<>();
 
@@ -93,7 +94,7 @@ public class ExperienceFragment extends BaseFragment {
         Login login = new Login();
         login.setUserId(JPushInterface.getRegistrationID(getContext()));
         login.setTuiguangma(Constant.TUIGUANGMA);
-        OkHttpUtils.post().url("http://119.29.180.63:86/Apps/GetShuffling").build().execute(new StringCallback() {
+        OkHttpUtils.get().url("http://119.29.180.63:86/Apps/GetShuffling").build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -102,56 +103,30 @@ public class ExperienceFragment extends BaseFragment {
 
             @Override
             public void onResponse(String response, int id) {
-                AppLogger.e("AAA0"+response);
-                BaseResponseParams<UserInfo> baseResponseParams=GsonUtil.getInstance().fromJson(response,BaseResponseParams.class);
-                AppLogger.e("AAA1"+baseResponseParams.toString());
+                MnvideoModel mnvideoModel = GsonUtil.getInstance().fromJson(response, MnvideoModel.class);
+                if (mnvideoModel.getResponseCode().equals(Constant.RESPONSE_SUCCESS)) {
+                    gungGaoList = mnvideoModel.getMnvideoList();
+                    rollPagerView.setAdapter(new LoopPagerAdapter(rollPagerView) {
+                        @Override
+                        public View getView(ViewGroup container, int position) {
+                            ImageView view = new ImageView(container.getContext());
+                            GlideUtils.getInstance().loadNetImage(gungGaoList.get(position).getFileUrl(), view);
+                            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                            return view;
+                        }
 
-                UserInfo userInfo=baseResponseParams.getInfo();
-                AppLogger.e("AAA2"+userInfo.toString());
-//                JSONObject jsonObject = null;
-//                String data = null;
-//                String scby=null;
-//                String scbn=null;
-//                try {
-//                    jsonObject = new JSONObject(response);
-//                    data = jsonObject.getString("guanggao");
-//                    scby=jsonObject.getString("scby");
-//                    scbn=jsonObject.getString("scbn");
-//                    if (jsonObject.getString("responseCode").equals(Constant.RESPONSE_SUCCESS)) {
-//
-//                        AppApplication.getInstance().getBaseUserInfo().setScbn(Long.parseLong(scby));
-//                        AppApplication.getInstance().getBaseUserInfo().setScby(Long.parseLong(scbn));
-//
-//                        if (null != data) {
-//                            gungGaoList =GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
-//                                    }.getType());
-//                            rollPagerView.setAdapter(new LoopPagerAdapter(rollPagerView) {
-//                                @Override
-//                                public View getView(ViewGroup container, int position) {
-//                                    ImageView view = new ImageView(container.getContext());
-//                                    GlideUtils.getInstance().loadNetImage(gungGaoList.get(position).getFileUrl(), view);
-//                                    view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                                    view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//                                    return view;
-//                                }
-//
-//                                @Override
-//                                public int getRealCount() {
-//                                    return gungGaoList.size();
-//                                }
-//                            });
-//                        } else {
-//                        }
-//                    } else {
-//                        ToastUtils.getInstance().showShortToast(jsonObject.getString("responseMsg"));
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                        @Override
+                        public int getRealCount() {
+                            return gungGaoList.size();
+                        }
+                    });
+                } else {
+                    ToastUtils.getInstance().showShortToast(mnvideoModel.getResponseMsg());
+                }
             }
+
         });
-
-
 
 
         smartRefreshLayout = rootView.findViewById(R.id.fragment_experience_smartRefreshLayout);
@@ -229,7 +204,7 @@ public class ExperienceFragment extends BaseFragment {
 
     @Override
     public void NetInfoResponse(String data, int sign) {
-        AppLogger.e("AAAAA"+data);
+        AppLogger.e("AAAAA" + data);
         progressCancel();
         switch (sign) {
             case 0:
@@ -237,8 +212,8 @@ public class ExperienceFragment extends BaseFragment {
 
 //                list=GsonUtil.getInstance().fromJson(data, new TypeToken<ArrayList<Mnvideo>>() {
 //                }.getType());
-                MnvideoModel mnvideoModel=GsonUtil.getInstance().fromJson(data,MnvideoModel.class);
-                list=  mnvideoModel.getMnvideoList();
+                MnvideoModel mnvideoModel = GsonUtil.getInstance().fromJson(data, MnvideoModel.class);
+                list = mnvideoModel.getMnvideoList();
                 if (smartRefreshLayout.isRefreshing() && mBaseRecyclerAdapter != null) {
                     mBaseRecyclerAdapter.refresh(list);
                     smartRefreshLayout.finishRefresh();

@@ -16,4 +16,14 @@ public class GungGao {
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
     }
+
+
+
+
+
+
+
+
+
+
 }

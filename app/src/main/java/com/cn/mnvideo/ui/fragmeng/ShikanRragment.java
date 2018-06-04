@@ -47,7 +47,7 @@ public class ShikanRragment extends BaseFragment {
 
     private InfoBean mInfoBean;
 
-    private int pageNum = 0;
+    private int pageNum = 1;
     private int type = 0;
 
     private ArrayList<Mnvideo> mnVideoArrayList = new ArrayList<>();
@@ -84,7 +84,7 @@ public class ShikanRragment extends BaseFragment {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                pageNum = 0;
+                pageNum = 1;
                 getData(Constant.IP + Constant.VIDEO_RUL + "type=" + type + "&pageNum=" + pageNum, 0);
             }
         });
