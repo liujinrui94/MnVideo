@@ -78,7 +78,7 @@ public class SplashActivity extends BaseActivity implements NetRequestView {
 //        if (System.currentTimeMillis() > stringToLong(userInfo.getEndTime(), "yyyy-MM-dd HH:mm:ss")) {
 //            userInfo.setMemberlevel(0);
 //        }
-
+        AppLogger.e(userInfo.toString());
         AppApplication.getInstance().setBaseUserInfo(userInfo);
         startActivity(new Intent(this, TabMainActivity.class));
         finish();

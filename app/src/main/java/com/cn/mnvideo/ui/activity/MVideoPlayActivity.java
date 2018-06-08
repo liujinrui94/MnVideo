@@ -330,7 +330,7 @@ public class MVideoPlayActivity extends BaseActivity implements NetRequestView {
         if (code == 0) {
             return qingqiu;
         } else if (code == 1) {
-            return Constant.FACHUPINGLUN + "tid=" + tid + "&content=" + editText.getText().toString() + "&uid=" + AppApplication.getInstance().getBaseUserInfo().getId();
+            return Constant.FACHUPINGLUN + "tid=" + tid + "&content=" + editText.getText().toString() + "&uid=" + AppApplication.getInstance().getBaseUserInfo().getUserId();
         }
         return qingqiu;
 

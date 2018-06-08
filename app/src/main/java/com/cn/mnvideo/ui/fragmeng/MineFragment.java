@@ -85,7 +85,7 @@ public class MineFragment extends BaseFragment {
     private void initView() {
 
         GlideUtils.getInstance().loadNetImage(AppApplication.getInstance().getBaseUserInfo().getHeadImg(), iv_header);
-        tv_account.setText(AppApplication.getInstance().getBaseUserInfo().getId());
+        tv_account.setText(AppApplication.getInstance().getBaseUserInfo().getUserId());
         tv_password.setText(AppApplication.getInstance().getBaseUserInfo().getPassword());
 
         if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() ==7) {

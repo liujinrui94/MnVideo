@@ -40,14 +40,14 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
     private ImageView imageView;
 
     private String[] url = {
-            "chong/1j.jpg",
-            "chong/2j.jpg",
-            "chong/3j.jpg",
-            "chong/4j.jpg",
-            "chong/5j.jpg",
-            "chong/6j.jpg",
-            "chong/7j.jpg",
-            "chong/7j.jpg"};
+            "http://222.186.175.193:8228/pay/pay_top0.jpg",
+            "http://222.186.175.193:8228/pay/pay_top1.jpg",
+            "http://222.186.175.193:8228/pay/pay_top2.jpg",
+            "http://222.186.175.193:8228/pay/pay_top3.jpg",
+            "http://222.186.175.193:8228/pay/pay_top4.jpg",
+            "http://222.186.175.193:8228/pay/pay_top5.jpg",
+            "http://222.186.175.193:8228/pay/pay_top6.jpg",
+            "http://222.186.175.193:8228/pay/pay_top6.jpg"};
 
     private String[] money = {"39", "20", "28", "25", "20", "22", "66"};
 
@@ -101,7 +101,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         params.width = (int) (d.getWidth() * 0.8); // 宽度设置为屏幕的0.65，根据实际情况调整
         dialogWindow.setAttributes(params);
         Glide.with(context)
-                .load(Constant.INMAGE_IP + url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()])
+                .load(url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()])
                 .override(params.width, 200) // resizes the image to these dimensions (in pixel). does not respect aspect ratio
                 .into(imageView);
         view.findViewById(R.id.wx_pay_btn).setOnClickListener(this);
@@ -123,21 +123,21 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
             rbtn3.setVisibility(View.VISIBLE);
         }
         rbtn1.setText(Html.fromHtml("<font>全站观看</font>    <font color='red'>           ￥" + money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()] + "元</font>"));
-        rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getScbn() + "元</font>"));
-        rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包年观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getScby() + "元</font>"));
+        rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getSybc() + "元</font>"));
+        rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包年观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getSnbc() + "元</font>"));
         rbtn2.performClick();
         mpayBean.setMoney(money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()]);
         rbtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getScbn());
+                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getSnbc());
             }
         });
 
         rbtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getScby());
+                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getSybc());
             }
         });
 //        groupBroadcast.setOnCheckedChangeListener(listener);
@@ -158,7 +158,7 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
     public void onClick(View view) {
 
         mpayBean.setQudaoname(Constant.TUIGUANGMA);
-        mpayBean.setUserid(AppApplication.getInstance().getBaseUserInfo().getId());
+        mpayBean.setUserid(AppApplication.getInstance().getBaseUserInfo().getUserId());
         mpayBean.setUserid("1");
 //        mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
 //        mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());

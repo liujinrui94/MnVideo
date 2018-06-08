@@ -13,28 +13,13 @@ public class UserInfo  {
     private int memberlevel;//当前等级
     private String headImg;//头像地址
 
-    private String id;//用户ID
+    private String userId;//用户ID
 
     private String endTime;//会员到期时间
 
-    private long scbn;//包年价格
-    private long scby;//包月价格
+    private String snbc;//包年价格
+    private String sybc;//包月价格
 
-    public long getScbn() {
-        return scbn;
-    }
-
-    public void setScbn(long scbn) {
-        this.scbn = scbn;
-    }
-
-    public long getScby() {
-        return scby;
-    }
-
-    public void setScby(long scby) {
-        this.scby = scby;
-    }
 
     public String getEndTime() {
         return endTime;
@@ -44,12 +29,28 @@ public class UserInfo  {
         this.endTime = endTime;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getSnbc() {
+        return snbc;
+    }
+
+    public void setSnbc(String snbc) {
+        this.snbc = snbc;
+    }
+
+    public String getSybc() {
+        return sybc;
+    }
+
+    public void setSybc(String sybc) {
+        this.sybc = sybc;
     }
 
     public String getName() {
@@ -84,7 +85,6 @@ public class UserInfo  {
         this.headImg = headImg;
     }
 
-
     @Override
     public String toString() {
         return "UserInfo{" +
@@ -92,10 +92,10 @@ public class UserInfo  {
                 ", password='" + password + '\'' +
                 ", memberlevel=" + memberlevel +
                 ", headImg='" + headImg + '\'' +
-                ", id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", scbn=" + scbn +
-                ", scby=" + scby +
+                ", snbc='" + snbc + '\'' +
+                ", sybc='" + sybc + '\'' +
                 '}';
     }
 }

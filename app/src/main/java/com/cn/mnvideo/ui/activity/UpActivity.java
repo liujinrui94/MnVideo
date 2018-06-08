@@ -79,7 +79,7 @@ public class UpActivity extends AppCompatActivity implements View.OnClickListene
         mPayInfo = new PayInfo();
         mPayInfo.setReId(REID);
         mPayInfo.setTuiguangma(Constant.TUIGUANGMA);
-        mPayInfo.setUserId(AppApplication.getInstance().getBaseUserInfo().getId());
+        mPayInfo.setUserId(AppApplication.getInstance().getBaseUserInfo().getUserId());
         mPayInfo.setTerminalIp(NetUtil.getIPAddress(this));
         mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
 

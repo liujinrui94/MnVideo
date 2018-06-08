@@ -52,7 +52,7 @@ public class BackCommonDialog extends Dialog implements View.OnClickListener {
         mPayInfo = new PayInfo();
         mPayInfo.setReId(REID);
         mPayInfo.setTuiguangma(Constant.TUIGUANGMA);
-        mPayInfo.setUserId(AppApplication.getInstance().getBaseUserInfo().getId());
+        mPayInfo.setUserId(AppApplication.getInstance().getBaseUserInfo().getUserId());
         mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
         mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
         mPayInfo.setMoney((long) 18);
