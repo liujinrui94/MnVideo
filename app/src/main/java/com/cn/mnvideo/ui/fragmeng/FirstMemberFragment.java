@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,11 @@ import com.cn.mnvideo.base.BaseFragment;
 import com.cn.mnvideo.base.Constant;
 import com.cn.mnvideo.bean.InfoBean;
 import com.cn.mnvideo.bean.Mnvideo;
+import com.cn.mnvideo.bean.MnvideoModel;
 import com.cn.mnvideo.ui.activity.MVideoPlayActivity;
 import com.cn.mnvideo.utils.GlideUtils;
 import com.cn.mnvideo.utils.GsonUtil;
+import com.google.gson.reflect.TypeToken;
 import com.jude.rollviewpager.RollPagerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,6 +33,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -48,7 +52,7 @@ public class FirstMemberFragment extends BaseFragment {
     private View rootView;
     private BaseRecyclerAdapter mBaseRecyclerAdapter;
 
-    private InfoBean mInfoBean;
+//    private InfoBean mInfoBean;
 
     private int pageNum = 1;
 
@@ -149,27 +153,28 @@ public class FirstMemberFragment extends BaseFragment {
         progressCancel();
         switch (sign) {
             case 0:
-                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
-
+//                List<Mnvideo> list=GsonUtil.getInstance().fromJson(data,new TypeToken<List<Mnvideo>>(){}.getType());
+//                mInfoBean = GsonUtil.getInstance().fromJson(data, InfoBean.class);
+                MnvideoModel mnvideoModel = GsonUtil.getInstance().fromJson(data, MnvideoModel.class);
                 if (smartRefreshLayout.isRefreshing() && mBaseRecyclerAdapter != null) {
-                    mBaseRecyclerAdapter.refresh(mInfoBean.getRecords());
+                    mBaseRecyclerAdapter.refresh( mnvideoModel.getMnvideoList());
                     smartRefreshLayout.finishRefresh();
 
                 } else if (smartRefreshLayout.isLoading()) {
-                    mBaseRecyclerAdapter.loadmore(mInfoBean.getRecords());
+                    mBaseRecyclerAdapter.loadmore( mnvideoModel.getMnvideoList());
                     smartRefreshLayout.finishLoadmore();
                 } else {
                     if (mBaseRecyclerAdapter == null) {
-                        initNetView(mInfoBean.getRecords());
+                        initNetView(mnvideoModel.getMnvideoList());
                         smartRefreshLayout.finishRefresh();
 
                     } else {
-                        mnVideoArrayList.addAll(mInfoBean.getRecords());
+                        mnVideoArrayList.addAll( mnvideoModel.getMnvideoList());
                         initNetView(mnVideoArrayList);
                     }
 
                 }
-                if (mInfoBean.getRecords().size() < 20) {
+                if (mnvideoModel.getMnvideoList().size() < 20) {
                     smartRefreshLayout.setLoadmoreFinished(true);
                 }
                 break;
