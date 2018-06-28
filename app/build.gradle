@@ -15,7 +15,7 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
-        resValue("string", "TGM", "e5b782b581304bd7b9839f4a5758f566")
+        resValue("string", "TGM", "qudao1")
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId, //
                 JPUSH_APPKEY : "1a63c3bf393400997bb65343", //JPush上注册的包名对应的appkey.

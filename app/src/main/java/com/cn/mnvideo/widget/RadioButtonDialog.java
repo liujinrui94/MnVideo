@@ -30,6 +30,8 @@ import com.cn.mnvideo.utils.GsonUtil;
 import com.cn.mnvideo.utils.NetUtil;
 import com.cn.mnvideo.utils.ToastUtils;
 
+import static android.R.attr.animation;
+
 public class RadioButtonDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
@@ -100,9 +102,17 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         Display d = manager.getDefaultDisplay(); // 获取屏幕宽、高度
         params.width = (int) (d.getWidth() * 0.8); // 宽度设置为屏幕的0.65，根据实际情况调整
         dialogWindow.setAttributes(params);
-        Glide.with(context)
+//        Glide.with(context)
+//                .load(url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()])
+//                .override(params.width, 200) // resizes the image to these dimensions (in pixel). does not respect aspect ratio
+//                .into(imageView);
+        Glide.with(imageView.getContext())
                 .load(url[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()])
-                .override(params.width, 200) // resizes the image to these dimensions (in pixel). does not respect aspect ratio
+                .placeholder(R.mipmap.ic_load_default)
+                .error(R.mipmap.ic_load_default)
+                .animate(animation)
+                .crossFade()
+                .centerCrop()
                 .into(imageView);
         view.findViewById(R.id.wx_pay_btn).setOnClickListener(this);
         view.findViewById(R.id.albb_pay_btn).setOnClickListener(this);
@@ -113,15 +123,15 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         rbtn2 = (RadioButton) groupBroadcast.getChildAt(1);
         rbtn3 = (RadioButton) groupBroadcast.getChildAt(2);
 
-        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() > 0) {
-            rbtn1.setVisibility(View.VISIBLE);
-            rbtn2.setVisibility(View.GONE);
-            rbtn3.setVisibility(View.GONE);
-        } else {
-            rbtn1.setVisibility(View.GONE);
-            rbtn2.setVisibility(View.VISIBLE);
-            rbtn3.setVisibility(View.VISIBLE);
-        }
+//        if (AppApplication.getInstance().getBaseUserInfo().getMemberlevel() > 0) {
+//            rbtn1.setVisibility(View.VISIBLE);
+//            rbtn2.setVisibility(View.GONE);
+//            rbtn3.setVisibility(View.GONE);
+//        } else {
+//            rbtn1.setVisibility(View.GONE);
+//            rbtn2.setVisibility(View.VISIBLE);
+//            rbtn3.setVisibility(View.VISIBLE);
+//        }
         rbtn1.setText(Html.fromHtml("<font>全站观看</font>    <font color='red'>           ￥" + money[AppApplication.getInstance().getBaseUserInfo().getMemberlevel()] + "元</font>"));
         rbtn2.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包月观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getSybc() + "元</font>"));
         rbtn3.setText(Html.fromHtml("<font>全站</font>    <font color='red'>包年观看      ￥" + AppApplication.getInstance().getBaseUserInfo().getSnbc() + "元</font>"));
@@ -130,14 +140,14 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
         rbtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getSnbc());
+                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getSybc());
             }
         });
 
         rbtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getSybc());
+                mpayBean.setMoney(AppApplication.getInstance().getBaseUserInfo().getSnbc());
             }
         });
 //        groupBroadcast.setOnCheckedChangeListener(listener);
@@ -156,10 +166,8 @@ public class RadioButtonDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
         mpayBean.setQudaoname(Constant.TUIGUANGMA);
         mpayBean.setUserid(AppApplication.getInstance().getBaseUserInfo().getUserId());
-        mpayBean.setUserid("1");
 //        mPayInfo.setTerminalIp(NetUtil.getIPAddress(getContext()));
 //        mPayInfo.setOutTradeNo("HP" + System.currentTimeMillis());
         if (null == mpayBean.getMoney()) {

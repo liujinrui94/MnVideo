@@ -99,6 +99,8 @@ public class PayWebViewActivity extends BaseActivity implements NetRequestView {
             if (url.startsWith("http:") || url.startsWith("https:")) {
                 return false;
             }
+            Log.e("AAAAA",url);
+            Log.e("AAAAA1", Uri.parse(url).toString());
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
               startActivityForResult(intent,0);

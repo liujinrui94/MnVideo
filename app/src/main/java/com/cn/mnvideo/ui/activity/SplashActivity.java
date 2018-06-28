@@ -65,9 +65,10 @@ public class SplashActivity extends BaseActivity implements NetRequestView {
     @Override
     public String getPostJsonString() {
         Login login = new Login();
-        login.setUserId(JPushInterface.getRegistrationID(this));
+//        login.setUserId(JPushInterface.getRegistrationID(this));
         login.setName(JPushInterface.getRegistrationID(this));
         login.setTuiguangma(Constant.TUIGUANGMA);
+        Log.e("AAAA",Constant.IP + Constant.LOGIN + GsonUtil.BeanToencode(login));
         return Constant.IP + Constant.LOGIN + GsonUtil.BeanToencode(login);
     }
 

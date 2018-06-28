@@ -51,7 +51,7 @@ public class GsonUtil {
 
         }
 
-        return sb.toString();
+        return sb.toString().substring(1);
     }
 
 
